@@ -1,0 +1,470 @@
+[
+  {
+    "name": "April 2023",
+    "values": [
+      {
+        "name": "April 2022 - Last period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0
+              }
+            ],
+            "value": "0",
+            "value_unformatted": 0
+          }
+        ]
+      },
+      {
+        "name": "April 2023 - This period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 9.9
+              }
+            ],
+            "value": "9.9 Cr",
+            "value_unformatted": 98798809
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "May 2023",
+    "values": [
+      {
+        "name": "May 2022 - Last period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 3.1
+              }
+            ],
+            "value": "1.6 Cr",
+            "value_unformatted": 16038776
+          }
+        ]
+      },
+      {
+        "name": "May 2023 - This period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 2.5
+              }
+            ],
+            "value": "3.4 Cr",
+            "value_unformatted": 34356867
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "June 2023",
+    "values": [
+      {
+        "name": "June 2022 - Last period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0.4
+              }
+            ],
+            "value": "10.1 L",
+            "value_unformatted": 1011902
+          }
+        ]
+      },
+      {
+        "name": "June 2023 - This period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 82.3
+              }
+            ],
+            "value": "82.3 Cr",
+            "value_unformatted": 823091406
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "July 2023",
+    "values": [
+      {
+        "name": "July 2022 - Last period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0
+              }
+            ],
+            "value": "40.0 K",
+            "value_unformatted": 40000
+          }
+        ]
+      },
+      {
+        "name": "July 2023 - This period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 648.5
+              }
+            ],
+            "value": "907.9 Cr",
+            "value_unformatted": 9078546995
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "August 2023",
+    "values": [
+      {
+        "name": "August 2022 - Last period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0
+              }
+            ],
+            "value": "5.0 L",
+            "value_unformatted": 501219
+          }
+        ]
+      },
+      {
+        "name": "August 2023 - This period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 36.7
+              }
+            ],
+            "value": "51.4 Cr",
+            "value_unformatted": 513566647
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "September 2023",
+    "values": [
+      {
+        "name": "September 2022 - Last period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0
+              }
+            ],
+            "value": "297.8 Cr",
+            "value_unformatted": 2977738959
+          }
+        ]
+      },
+      {
+        "name": "September 2023 - This period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 59.3
+              }
+            ],
+            "value": "59.3 Cr",
+            "value_unformatted": 592824077
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "October 2023",
+    "values": [
+      {
+        "name": "October 2022 - Last period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0
+              }
+            ],
+            "value": "7.1 Cr",
+            "value_unformatted": 70649037
+          }
+        ]
+      },
+      {
+        "name": "October 2023 - This period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0
+              }
+            ],
+            "value": "266.0",
+            "value_unformatted": 266
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "November 2023",
+    "values": [
+      {
+        "name": "November 2022 - Last period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0
+              }
+            ],
+            "value": "235 Cr",
+            "value_unformatted": 2349631273
+          }
+        ]
+      },
+      {
+        "name": "November 2023 - This period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 48
+              }
+            ],
+            "value": "38.4 Cr",
+            "value_unformatted": 384065107
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "December 2023",
+    "values": [
+      {
+        "name": "December 2022 - Last period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0
+              }
+            ],
+            "value": "48.7 Cr",
+            "value_unformatted": 486843631
+          }
+        ]
+      },
+      {
+        "name": "December 2023 - This period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0
+              }
+            ],
+            "value": "79.5 K",
+            "value_unformatted": 79490
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "January 2024",
+    "values": [
+      {
+        "name": "January 2023 - Last period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0
+              }
+            ],
+            "value": "1,001.1 Cr",
+            "value_unformatted": 10011132490
+          }
+        ]
+      },
+      {
+        "name": "January 2024 - This period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0
+              }
+            ],
+            "value": "59.5 K",
+            "value_unformatted": 59454
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "February 2024",
+    "values": [
+      {
+        "name": "February 2023 - Last period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0
+              }
+            ],
+            "value": "38.2 Cr",
+            "value_unformatted": 382284729
+          }
+        ]
+      },
+      {
+        "name": "February 2024 - This period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0.3
+              }
+            ],
+            "value": "32.5 L",
+            "value_unformatted": 3250204
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "March 2024",
+    "values": [
+      {
+        "name": "March 2023 - Last period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 0
+              }
+            ],
+            "value": "11,110 Cr",
+            "value_unformatted": 111100344535
+          }
+        ]
+      },
+      {
+        "name": "March 2024 - This period",
+        "values": [
+          {
+            "col_key": "revenue_generated",
+            "is_tooltip_exclusive": false,
+            "metadata": [
+              {
+                "key": "revenue_generated_to_target",
+                "value": 1
+              }
+            ],
+            "value": "2.3 Cr",
+            "value_unformatted": 23312751
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -21,6 +21,7 @@ def get_openai_api_key():
             with open(".env", "w") as env_file:
                 env_file.write(f"OPENAI_API_KEY={api_key}")
             print("API key saved to .env file.")
+    return api_key
   
 def display_chart(chart):
     try:

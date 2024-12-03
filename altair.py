@@ -3,42 +3,13 @@ import altair as alt
 import pandas as pd
 import json
 import re
+from utils import get_openai_api_key, display_chart
 import os
 import tempfile
 import webbrowser
 
 conversation_history = []
-
-
-def get_openai_api_key():
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key and os.path.exists(".env"):
-        with open(".env", "r") as env_file:
-            for line in env_file:
-                if line.startswith("OPENAI_API_KEY="):
-                    api_key = line.split("=", 1)[1].strip()
-                    break
-    if not api_key:
-        print("OpenAI API Key not found in environment variables or .env file.")
-        api_key = input("Please enter your OpenAI API Key: ").strip()
-        save_choice = input(
-            "Would you like to save this API key for future sessions? (yes/no): "
-        ).lower()
-        if save_choice == "yes":
-            with open(".env", "w") as env_file:
-                env_file.write(f"OPENAI_API_KEY={api_key}")
-            print("API key saved to .env file.")
-    return api_key
-
-
-def display_chart(chart):
-    try:
-        temp_html = tempfile.mktemp(".html")
-        chart.save(temp_html)
-        webbrowser.open(f"file://{temp_html}")
-        print(f"Chart saved and opened in default browser: {temp_html}")
-    except Exception as e:
-        print(f"Failed to display chart: {e}")
+client = openai.OpenAI(api_key=get_openai_api_key())
 
 
 def extract_customization_details(user_prompt):
@@ -46,7 +17,6 @@ def extract_customization_details(user_prompt):
     Extract customization details for the chart based on the user's description.
     This focuses solely on customization aspects like color, interactivity, etc.
     """
-    client = openai.OpenAI(api_key=get_openai_api_key())
 
     system_prompt = """
     You are an expert in data visualization customization. A user will describe how they would like to customize a chart.
@@ -73,7 +43,7 @@ def extract_customization_details(user_prompt):
         conversation_history.append({"role": "user", "content": user_prompt})
 
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o",
             messages=conversation_history,
             temperature=0.3,
             max_tokens=1000,
@@ -106,7 +76,6 @@ def analyze_data_and_create_chart(df, user_prompt):
     Analyze the data and generate a chart type recommendation based on the dataset and the user's goal.
     This will focus on the best chart type selection, columns to plot, etc.
     """
-    client = openai.OpenAI(api_key=get_openai_api_key())
 
     columns = list(df.columns)
     data_preview = df.head().to_string()
@@ -114,19 +83,26 @@ def analyze_data_and_create_chart(df, user_prompt):
 
     system_prompt = """
     You are an expert in data visualization. Given a dataset and a user's goal, analyze the dataset and recommend
-    the most appropriate chart type and how to visualize it. Consider:
-    1. Chart type options include Bar Chart, Line Chart, Pie Chart, etc.
-    2. Which columns should be used for the x and y axes?
-    3. Any data transformations needed (e.g., aggregations like sum, mean, etc.)?
-    4. Provide a rationale for your choice.
+    the most appropriate chart type among the following options: Bar Chart, Line Chart, and Pie Chart.
 
-    Output a JSON with the following details:
+    Here are the key points to consider:
+    1. **Bar Chart**: Typically used for categorical data on the x-axis and numerical data on the y-axis.
+    2. **Line Chart**: Typically used for showing trends over time (with a time variable on the x-axis) or continuous data.
+    3. **Pie Chart**: Best suited for visualizing parts of a whole (typically one categorical column and one numerical column).
+
+    For each chart type, you should:
+    - Choose the **x-axis** and **y-axis** columns.
+    - Suggest any necessary **data transformations** (e.g., aggregating numerical data, grouping by categories).
+    - Provide a **rationale** for why the suggested chart is appropriate for the given data and user goal.
+
+    Output a JSON with the following structure:
+
     {
-        "chart_type": "bar/line/pie",
-        "x_column": "column_name",
-        "y_column": "column_name",
-        "transformations": {...},
-        "rationale": "Explanation of the chart choice"
+        "chart_type": "bar/line/pie",      # Choose the most appropriate chart type
+        "x_column": "column_name",         # Choose the column for the x-axis
+        "y_column": "column_name",         # Choose the column for the y-axis
+        "transformations": { ... },        # Any necessary data transformations (e.g., aggregations)
+        "rationale": "Explanation of the chart choice based on the data and user goal"
     }
     """
 
@@ -145,18 +121,21 @@ def analyze_data_and_create_chart(df, user_prompt):
     """
 
     try:
+        # Add system prompt and user prompt to conversation history
         conversation_history.append(
             {"role": "system", "content": system_prompt}
-        )  # Add system prompt to the conversation history
+        )
         conversation_history.append({"role": "user", "content": user_prompt_with_data})
 
+        # Get model response for chart recommendation
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o",
             messages=conversation_history,
             temperature=0.2,
             max_tokens=1000,
         )
 
+        # Extract JSON response from the model
         gpt_recommendation = response.choices[0].message.content
         json_match = re.search(
             r"```json\s*({.*?})\s*```", gpt_recommendation, re.DOTALL
@@ -168,6 +147,7 @@ def analyze_data_and_create_chart(df, user_prompt):
                 re.search(r"\{.*\}", gpt_recommendation, re.DOTALL).group(0)
             )
 
+        # Add assistant's response to conversation history
         conversation_history.append(
             {"role": "assistant", "content": gpt_recommendation}
         )
@@ -292,42 +272,50 @@ def apply_customizations_and_create_chart(df, recommendation, customizations):
 def main():
     print("Intelligent CSV Chart Generator")
     while True:
-        data_source_choice = input(
-            "Do you want to upload a CSV file (1) or enter a URL to fetch CSV data (2)? Enter 1 or 2: anything else to exit"
-        ).strip()
+        try:
+            data_source_choice = input(
+                "Do you want to upload a CSV file (1) or enter a URL to fetch CSV data (2)? Enter 1 or 2 or 3 for prompt-based chart, anything else to exit: "
+            ).strip()
 
-        if data_source_choice == "1":
-            csv_path = input("Enter the path to your CSV file: ").strip()
-            try:
+            if data_source_choice == "1":
+                csv_path = input("Enter the path to your CSV file: ").strip()
                 df = pd.read_csv(csv_path)
-            except Exception as e:
-                print(f"Error reading the CSV file: {e}")
-                return
-        elif data_source_choice == "2":
-            csv_url = input("Enter the URL of the CSV file: ").strip()
-            try:
+
+            elif data_source_choice == "2":
+                csv_url = input("Enter the URL of the CSV file: ").strip()
                 df = pd.read_csv(csv_url)
-            except Exception as e:
-                print(f"Error fetching the CSV data from URL: {e}")
-                return
-        else:
-            print("Invalid choice. Exiting.")
-            return
 
-        user_prompt = input(
-            "Describe the insight or analysis you want from this data: "
-        ).strip()
+            # elif data_source_choice == "3":
+            #     user_prompt = input("Describe the chart you want: ").strip()
+            #     chart_details = generate_chart_from_prompt(user_prompt)
+            #     if chart_details:
+            #         chart = create_chart_from_details(chart_details)
+            #         if chart:
+            #             display_chart(chart)
+            #     continue
 
-        customizations = extract_customization_details(user_prompt)
-        recommendation = analyze_data_and_create_chart(df, user_prompt)
+            else:
+                print("Invalid choice. Exiting.")
+                break
 
-        if recommendation:
-            chart = apply_customizations_and_create_chart(
-                df, recommendation, customizations
-            )
-            if chart:
-                display_chart(chart)
+            user_prompt = input(
+                "Describe the insight or analysis you want from this data: "
+            ).strip()
+            customizations = extract_customization_details(user_prompt)
+            recommendation = analyze_data_and_create_chart(df, user_prompt)
 
+            if recommendation:
+                chart = apply_customizations_and_create_chart(
+                    df, recommendation, customizations
+                )
+                if chart:
+                    display_chart(chart)
+
+        except Exception as e:
+            print(f"Error: {e}")
+            continue
+
+        # Allow for further modifications
         while True:
             follow_up_prompt = (
                 input("Would you like to modify the chart further? (yes/no): ")
