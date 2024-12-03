@@ -80,26 +80,30 @@ def initialize_html(html_file='output.html'):
 </head>
 <body>
     <h1>Vega-Lite Visualizations</h1>
+</body>
+</html>
 """)
 
-def append_json_to_html(json_data, html_file='output.html'):
+def append_json_to_html(json_data, data, html_file='output.html'):
     initialize_html(html_file)
 
     # Generate a unique ID for the visualization
     visualization_id = f"vis_{int(time.time() * 1000)}"
+
+    # Embed the data into the Vega-Lite spec
+    json_data['data'] = {'values': data}
 
     # Prepare the HTML snippet for the new visualization
     visualization_html = f"""
     <div class="visualization">
         <div id="{visualization_id}"></div>
         <script>
-            const spec = {json.dumps(json_data)};
-            vegaEmbed("#{visualization_id}", spec).then(function(result) {{
+            vegaEmbed("#{visualization_id}", {json.dumps(json_data, indent=2)}).then(function(result) {{
 
             }}).catch(console.error);
         </script>
     </div>
-"""
+    """
 
     # Read the existing content except the closing </body></html> tags
     with open(html_file, 'r') as f:
@@ -141,6 +145,9 @@ def main():
     )
     initialize_html()
 
+    # Convert the DataFrame to a list of records (JSON)
+    data_as_json = df.to_dict(orient='records')
+
     while True:
         user_input = input("You: ").strip()
         if user_input.lower() in ["exit", "quit"]:
@@ -162,8 +169,8 @@ def main():
                 print("\n--- Vega-Lite JSON ---")
                 print(json.dumps(vega_lite_json, indent=2))
                 
-                # Append the JSON to the HTML file
-                append_json_to_html(vega_lite_json)
+                # Append the JSON to the HTML file with embedded data
+                append_json_to_html(vega_lite_json, data_as_json)
 
                 conversation.append(
                     {"role": "assistant", "content": json.dumps(vega_lite_json)}
@@ -183,4 +190,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-̀
