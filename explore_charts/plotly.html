@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Market Analysis</title>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .charts-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .chart-wrapper {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            width: calc(33.333% - 40px);
+            min-width: 300px;
+            box-sizing: border-box;
+        }
+        .chart-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="charts-container">
+        <div class="chart-wrapper">
+            <div class="chart-title">Market Segmentation</div>
+            <div id="pieChart"></div>
+        </div>
+        <div class="chart-wrapper">
+            <div class="chart-title">Average Price by Property Type</div>
+            <div id="barChart"></div>
+        </div>
+        <div class="chart-wrapper">
+            <div class="chart-title">Market Trends</div>
+            <div id="lineChart"></div>
+        </div>
+    </div>
+
+    <script>
+        // Pie Chart Data
+        const pieData = [{
+            labels: [
+                'Single-Family Homes', 
+                'Condominiums', 
+                'Multi-Family Units', 
+                'Townhouses', 
+                'Vacant Land'
+            ],
+            values: [45, 25, 15, 10, 5],
+            type: 'pie',
+            marker: {
+                colors: [
+                    'rgba(255, 99, 132, 0.7)',    // Vibrant pink for Single-Family
+                    'rgba(54, 162, 235, 0.7)',    // Bright blue for Condominiums
+                    'rgba(255, 206, 86, 0.7)',    // Sunny yellow for Multi-Family
+                    'rgba(75, 192, 192, 0.7)',    // Teal for Townhouses
+                    'rgba(153, 102, 255, 0.7)'    // Purple for Vacant Land
+                ]
+            },
+            textinfo: 'percent',
+            textposition: 'inside'
+        }];
+
+        const pieLayout = {
+            title: 'Market Segmentation',
+            height: 400,
+            margin: {t: 50, b: 50, l: 50, r: 50}
+        };
+
+        // Bar Chart Data
+        const barData = [{
+            x: ['Single-Family', 'Condominiums', 'Multi-Family', 'Townhouses', 'Vacant Land'],
+            y: [450000, 350000, 600000, 400000, 250000],
+            type: 'bar',
+            marker: {
+                color: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)'
+                ]
+            }
+        }];
+
+        const barLayout = {
+            title: 'Average Price by Property Type',
+            height: 400,
+            yaxis: {
+                title: 'Price in USD',
+                tickformat: '$,.0f'
+            }
+        };
+
+        // Line Chart Data
+        const lineData = [
+            {
+                x: ['2019', '2020', '2021', '2022', '2023'],
+                y: [320000, 350000, 425000, 485000, 465000],
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Median Home Price',
+                line: {color: 'rgba(75, 192, 192, 1)'}
+            },
+            {
+                x: ['2019', '2020', '2021', '2022', '2023'],
+                y: [12500, 11000, 13500, 14200, 12800],
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Number of Sales',
+                line: {color: 'rgba(255, 99, 132, 1)'}
+            }
+        ];
+
+        const lineLayout = {
+            title: 'Market Trends',
+            height: 400,
+            yaxis: {
+                title: 'Value'
+            }
+        };
+
+        // Render Charts
+        Plotly.newPlot('pieChart', pieData, pieLayout, {responsive: true});
+        Plotly.newPlot('barChart', barData, barLayout, {responsive: true});
+        Plotly.newPlot('lineChart', lineData, lineLayout, {responsive: true});
+    </script>
+</body>
+</html>

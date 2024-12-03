@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Market Analysis</title>
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .charts-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .chart-wrapper {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            width: calc(33.333% - 40px);
+            min-width: 300px;
+            box-sizing: border-box;
+        }
+        .chart-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="charts-container">
+        <div class="chart-wrapper">
+            <div class="chart-title">Market Segmentation</div>
+            <canvas id="pieChart"></canvas>
+        </div>
+        <div class="chart-wrapper">
+            <div class="chart-title">Average Price by Property Type</div>
+            <canvas id="barChart"></canvas>
+        </div>
+        <div class="chart-wrapper">
+            <div class="chart-title">Market Trends</div>
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Pie Chart Data
+        const pieData = {
+            labels: [
+                'Single-Family Homes', 
+                'Condominiums', 
+                'Multi-Family Units', 
+                'Townhouses', 
+                'Vacant Land'
+            ],
+            datasets: [{
+                label: 'Market Share',
+                data: [45, 25, 15, 10, 5],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',    // Vibrant pink for Single-Family
+                    'rgba(54, 162, 235, 0.7)',    // Bright blue for Condominiums
+                    'rgba(255, 206, 86, 0.7)',    // Sunny yellow for Multi-Family
+                    'rgba(75, 192, 192, 0.7)',    // Teal for Townhouses
+                    'rgba(153, 102, 255, 0.7)'    // Purple for Vacant Land
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Bar Chart Data
+        const barData = {
+            labels: ['Single-Family', 'Condominiums', 'Multi-Family', 'Townhouses', 'Vacant Land'],
+            datasets: [{
+                label: 'Average Price ($)',
+                data: [450000, 350000, 600000, 400000, 250000],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Line Chart Data
+        const lineData = {
+            labels: ['2019', '2020', '2021', '2022', '2023'],
+            datasets: [
+                {
+                    label: 'Median Home Price',
+                    data: [320000, 350000, 425000, 485000, 465000],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.3
+                },
+                {
+                    label: 'Number of Sales',
+                    data: [12500, 11000, 13500, 14200, 12800],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    tension: 0.3
+                }
+            ]
+        };
+
+        // Pie Chart Configuration
+        const pieConfig = {
+            type: 'pie',
+            data: pieData,
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.formattedValue + '%';
+                            }
+                        }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        };
+
+        // Bar Chart Configuration
+        const barConfig = {
+            type: 'bar',
+            data: barData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Price in USD'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return '$' + context.formattedValue.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // Line Chart Configuration
+        const lineConfig = {
+            type: 'line',
+            data: lineData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Value'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                }
+            }
+        };
+
+        // Render Charts
+        const pieCtx = document.getElementById('pieChart').getContext('2d');
+        new Chart(pieCtx, pieConfig);
+
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        new Chart(barCtx, barConfig);
+
+        const lineCtx = document.getElementById('lineChart').getContext('2d');
+        new Chart(lineCtx, lineConfig);
+    </script>
+</body>
+</html>

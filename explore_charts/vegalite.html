@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Market Analysis - Vega-Lite</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.25.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.16.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.2"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .chart-wrapper {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .chart-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="charts-container">
+        <div class="chart-wrapper">
+            <div class="chart-title">Market Segmentation</div>
+            <div id="pieChart"></div>
+        </div>
+        <div class="chart-wrapper">
+            <div class="chart-title">Average Price by Property Type</div>
+            <div id="barChart"></div>
+        </div>
+        <div class="chart-wrapper">
+            <div class="chart-title">Market Trends</div>
+            <div id="lineChart"></div>
+        </div>
+    </div>
+
+    <script>
+        // Market Segmentation (Pie Chart)
+        const pieSpec = {
+            $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+            description: 'Market Segmentation',
+            width: 300,
+            height: 300,
+            data: {
+                values: [
+                    {category: 'Single-Family Homes', value: 45},
+                    {category: 'Condominiums', value: 25},
+                    {category: 'Multi-Family Units', value: 15},
+                    {category: 'Townhouses', value: 10},
+                    {category: 'Vacant Land', value: 5}
+                ]
+            },
+            mark: 'arc',
+            encoding: {
+                theta: {field: 'value', type: 'quantitative'},
+                color: {
+                    field: 'category', 
+                    type: 'nominal',
+                    scale: {
+                        range: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)'
+                        ]
+                    }
+                },
+                tooltip: [
+                    {field: 'category', type: 'nominal'},
+                    {field: 'value', type: 'quantitative', title: 'Market Share (%)'}
+                ]
+            },
+            layer: [{
+                mark: {type: 'arc', outerRadius: 100}
+            }, {
+                mark: {type: 'text', radius: 120},
+                encoding: {
+                    text: {field: 'value', type: 'quantitative'}
+                }
+            }]
+        };
+
+        // Average Price by Property Type (Bar Chart)
+        const barSpec = {
+            $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+            description: 'Average Price by Property Type',
+            width: 300,
+            height: 300,
+            data: {
+                values: [
+                    {type: 'Single-Family', price: 450000},
+                    {type: 'Condominiums', price: 350000},
+                    {type: 'Multi-Family', price: 600000},
+                    {type: 'Townhouses', price: 400000},
+                    {type: 'Vacant Land', price: 250000}
+                ]
+            },
+            mark: 'bar',
+            encoding: {
+                x: {field: 'type', type: 'nominal', axis: {labelAngle: -45}},
+                y: {
+                    field: 'price', 
+                    type: 'quantitative', 
+                    title: 'Average Price (USD)',
+                    axis: {
+                        format: '$,.0f'
+                    }
+                },
+                color: {
+                    field: 'type',
+                    type: 'nominal',
+                    scale: {
+                        range: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)'
+                        ]
+                    }
+                },
+                tooltip: [
+                    {field: 'type', type: 'nominal'},
+                    {field: 'price', type: 'quantitative', title: 'Average Price', format: '$,.0f'}
+                ]
+            }
+        };
+
+        // Market Trends (Line Chart)
+        const lineSpec = {
+            $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+            description: 'Market Trends',
+            width: 300,
+            height: 300,
+            data: {
+                values: [
+                    {year: 2019, metric: 'Median Home Price', value: 320000},
+                    {year: 2020, metric: 'Median Home Price', value: 350000},
+                    {year: 2021, metric: 'Median Home Price', value: 425000},
+                    {year: 2022, metric: 'Median Home Price', value: 485000},
+                    {year: 2023, metric: 'Median Home Price', value: 465000},
+                    {year: 2019, metric: 'Number of Sales', value: 12500},
+                    {year: 2020, metric: 'Number of Sales', value: 11000},
+                    {year: 2021, metric: 'Number of Sales', value: 13500},
+                    {year: 2022, metric: 'Number of Sales', value: 14200},
+                    {year: 2023, metric: 'Number of Sales', value: 12800}
+                ]
+            },
+            mark: 'line',
+            encoding: {
+                x: {field: 'year', type: 'temporal'},
+                y: {
+                    field: 'value', 
+                    type: 'quantitative',
+                    title: 'Value'
+                },
+                color: {
+                    field: 'metric', 
+                    type: 'nominal',
+                    scale: {
+                        range: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)']
+                    }
+                },
+                tooltip: [
+                    {field: 'year', type: 'temporal'},
+                    {field: 'metric', type: 'nominal'},
+                    {field: 'value', type: 'quantitative', format: ',.0f'}
+                ]
+            }
+        };
+
+        // Render Charts
+        vegaEmbed('#pieChart', pieSpec);
+        vegaEmbed('#barChart', barSpec);
+        vegaEmbed('#lineChart', lineSpec);
+    </script>
+</body>
+</html>

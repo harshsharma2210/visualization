@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vega-Lite Line Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.24.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.19.1"></script>
+</head>
+<body>
+    <h1>Comparison of "Last Fy" and "This Fy" by Month (Line Chart)</h1>
+    <div id="vis"></div>
+
+    <script type="text/javascript">
+        const data = [
+            {"month": "April 2023", "last_year": 0, "this_year": 20955600},
+            {"month": "May 2023", "last_year": 0, "this_year": 18350000},
+            {"month": "June 2023", "last_year": 68310, "this_year": 12943580},
+            {"month": "July 2023", "last_year": 21601, "this_year": 144888868},
+            {"month": "August 2023", "last_year": 134120180, "this_year": 102848517},
+            {"month": "September 2023", "last_year": 41649000, "this_year": 23610592},
+            {"month": "October 2023", "last_year": 7917182, "this_year": 61784552},
+            {"month": "November 2023", "last_year": 99342565, "this_year": 21379945},
+            {"month": "December 2023", "last_year": 101000, "this_year": 31355587},
+            {"month": "January 2024", "last_year": 79711506, "this_year": 56738564},
+            {"month": "February 2024", "last_year": 0, "this_year": 190468339},
+            {"month": "March 2024", "last_year": 27031090, "this_year": 235805379}
+        ];
+
+        const spec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "data": {
+                "values": data
+            },
+            "width": 800,  // Increased chart width
+            "height": 400,  // Increased chart height
+            "mark": "line",
+            "encoding": {
+                "x": {
+                "field": "month",
+                "type": "temporal",
+                "axis": {
+                    "labelAngle": -45,
+                    "title": "Month"
+                },
+                "sort": ["April 2023", "May 2023", "June 2023", "July 2023", "August 2023", "September 2023", "October 2023", "November 2023", "December 2023", "January 2024", "February 2024", "March 2024"]
+            },
+
+                "y": {
+                    "field": "value",
+                    "type": "quantitative",
+                    "axis": {
+                        "title": "Value (in Crores)",
+                        "tickCount": 6,  // Adjusts the number of ticks on the y-axis
+                        "format": ".0s",  // Formats the ticks as rounded values
+                        "grid": true,
+                        "labelExpr": "datum.value / 10000000 + ' Cr'"  // Custom format for Crores
+                    },
+                    "scale": {
+                        "domain": [0, 250000000]  // Defines the y-axis range (0 to 250 crores, adjust as needed)
+                    }
+                },
+                "color": {
+                    "field": "category",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": ["last_year", "this_year"],
+                        "range": ["#1f77b4", "#ff7f0e"]
+                    },
+                    "legend": {
+                        "orient": "bottom",
+                        "labelExpr": "datum.label === 'last_year' ? 'Last Fy' : 'This Fy'"  // Change labels in the legend
+                    }
+                },
+                "shape": {
+                    "field": "category",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": ["last_year", "this_year"],
+                        "range": ["circle", "circle"]
+                    },
+                    "legend": {"title": ""}
+                },
+                "tooltip": [
+                    {"field": "month", "title": "Month"},
+                    {"field": "value", "title": "Value"}
+                ]
+            },
+            "transform": [
+                {
+                    "fold": ["last_year", "this_year"],
+                    "as": ["category", "value"]
+                }
+            ],
+            "layer": [
+                {
+                    "mark": {
+                        "type": "line",
+                        "strokeWidth": 2
+                    },
+                    "encoding": {
+                        "x": {"field": "month", "type": "nominal"},
+                        "y": {"field": "value", "type": "quantitative"},
+                        "color": {"field": "category", "type": "nominal"},
+                        "shape": {"field": "category", "type": "nominal"}
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "line",  // Dotted lines for "This Year"
+                        "stroke": "#ff7f0e",  // Color for "This Year"
+                        "strokeWidth": 2,
+                        "strokeDash": [4, 4]  // Dotted line style
+                    },
+                    "encoding": {
+                        "x": {"field": "month", "type": "nominal"},
+                        "y": {"field": "value", "type": "quantitative"},
+                        "color": {"value": "#ff7f0e"}  // Ensure the color matches "This Year"
+                    },
+                    "transform": [
+                        {"filter": {"field": "category", "equal": "this_year"}}  // Filter for "This Year" only
+                    ]
+                }
+            ]
+        };
+
+        vegaEmbed("#vis", spec);
+    </script>
+</body>
+</html>

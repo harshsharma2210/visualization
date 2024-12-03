@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Chart Comparison - Last Year vs This Year</title>
+    <!-- Vega, Vega-Lite, Vega-Embed CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.21.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.8.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.23.0"></script>
+</head>
+<body>
+    <h1>Comparison of Data for Last Year and This Year</h1>
+    <div id="vis"></div>
+
+    <script>
+        const data = [
+            { "month": "April 2023", "last_year": 0, "this_year": 20955600 },
+            { "month": "May 2023", "last_year": 0, "this_year": 18350000 },
+            { "month": "June 2023", "last_year": 68310, "this_year": 12943580 },
+            { "month": "July 2023", "last_year": 21601, "this_year": 144888868 },
+            { "month": "August 2023", "last_year": 134120180, "this_year": 102848517 },
+            { "month": "September 2023", "last_year": 41649000, "this_year": 23610592 },
+            { "month": "October 2023", "last_year": 7917182, "this_year": 61784552 },
+            { "month": "November 2023", "last_year": 99342565, "this_year": 21379945 },
+            { "month": "December 2023", "last_year": 101000, "this_year": 31355587 },
+            { "month": "January 2024", "last_year": 79711506, "this_year": 56738564 },
+            { "month": "February 2024", "last_year": 0, "this_year": 190468339 },
+            { "month": "March 2024", "last_year": 27031090, "this_year": 235805379 }
+        ];
+
+        const vlSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "data": {
+                "values": data
+            },
+            "mark": "line",
+            "encoding": {
+                "x": {
+                    "field": "month",
+                    "type": "ordinal",
+                    "axis": {
+                        "labelAngle": -45,
+                        "title": "Month"
+                    }
+                },
+                "y": {
+                    "field": "value",
+                    "type": "quantitative",
+                    "title": "Value"
+                },
+                "color": {
+                    "field": "year",
+                    "type": "nominal",
+                    "legend": {
+                        "title": "Year"
+                    }
+                }
+            },
+            "transform": [
+                {
+                    "fold": ["last_year", "this_year"],
+                    "as": ["year", "value"]
+                }
+            ]
+        };
+
+        vegaEmbed('#vis', vlSpec).catch(console.error);
+    </script>
+</body>
+</html>
