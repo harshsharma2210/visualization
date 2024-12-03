@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vega-Lite Visualizations</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .visualization {
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vega-Lite Visualizations</h1>
+
+    <div class="visualization">
+        <div id="vis_1733228368847"></div>
+        <script>
+            const spec = {"$schema": "https://vega.github.io/schema/vega-lite/v5.json", "description": "A line chart showing the trend of the number of visits over time for each site.", "data": {"url": "path/to/your/data.csv"}, "transform": [{"calculate": "year(datum.Month) + '-' + (month(datum.Month) < 9 ? '0' : '') + (month(datum.Month) + 1)", "as": "FormattedMonth"}], "mark": "line", "encoding": {"x": {"field": "FormattedMonth", "type": "temporal", "title": "Month"}, "y": {"field": "Number of Visits", "type": "quantitative", "title": "Number of Visits"}, "color": {"field": "Site", "type": "nominal", "title": "Site"}}};
+            vegaEmbed("#vis_1733228368847", spec).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>

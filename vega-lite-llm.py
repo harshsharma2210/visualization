@@ -3,10 +3,10 @@ import openai
 import json
 import os
 import regex as re
+import time
 from utils import get_openai_api_key
 
 openai.api_key = get_openai_api_key()
-
 
 def read_csv(file_path):
     try:
@@ -15,12 +15,10 @@ def read_csv(file_path):
     except Exception as e:
         raise ValueError(f"Error reading CSV file: {e}")
 
-
 def infer_csv_structure(df):
     description = df.describe(include="all").to_dict()
     columns = df.columns.tolist()
     return description, columns
-
 
 def extract_json(text):
     json_pattern = re.compile(r"\{(?:[^{}]|(?0))*\}")
@@ -28,7 +26,6 @@ def extract_json(text):
     if match:
         return match.group()
     return None
-
 
 def send_message_to_openai(conversation, dataframe_info, column_info, api_key):
     system_prompts = [
@@ -59,6 +56,67 @@ def send_message_to_openai(conversation, dataframe_info, column_info, api_key):
     except Exception as e:
         raise ConnectionError(f"Error communicating with OpenAI: {e}")
 
+def initialize_html(html_file='output.html'):
+    """Create the HTML file with necessary headers if it doesn't exist."""
+    if not os.path.exists(html_file):
+        with open(html_file, 'w') as f:
+            f.write("""<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vega-Lite Visualizations</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .visualization {
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vega-Lite Visualizations</h1>
+""")
+
+def append_json_to_html(json_data, html_file='output.html'):
+    initialize_html(html_file)
+
+    # Generate a unique ID for the visualization
+    visualization_id = f"vis_{int(time.time() * 1000)}"
+
+    # Prepare the HTML snippet for the new visualization
+    visualization_html = f"""
+    <div class="visualization">
+        <div id="{visualization_id}"></div>
+        <script>
+            const spec = {json.dumps(json_data)};
+            vegaEmbed("#{visualization_id}", spec).then(function(result) {{
+
+            }}).catch(console.error);
+        </script>
+    </div>
+"""
+
+    # Read the existing content except the closing </body></html> tags
+    with open(html_file, 'r') as f:
+        content = f.read()
+
+    # Find the position to insert the new visualization (before </body>)
+    insertion_point = content.rfind('</body>')
+    if insertion_point == -1:
+        # If </body> not found, append at the end
+        insertion_point = len(content)
+
+    # Insert the new visualization HTML
+    new_content = content[:insertion_point] + visualization_html + content[insertion_point:]
+
+    # Write the updated content back to the HTML file
+    with open(html_file, 'w') as f:
+        f.write(new_content)
 
 def main():
     try:
@@ -81,6 +139,7 @@ def main():
     print(
         "\nStart chatting with the assistant. Type 'exit' or 'quit' to end the session.\n"
     )
+    initialize_html()
 
     while True:
         user_input = input("You: ").strip()
@@ -100,10 +159,16 @@ def main():
         if extracted_json:
             try:
                 vega_lite_json = json.loads(extracted_json)
+                print("\n--- Vega-Lite JSON ---")
                 print(json.dumps(vega_lite_json, indent=2))
+                
+                # Append the JSON to the HTML file
+                append_json_to_html(vega_lite_json)
+
                 conversation.append(
                     {"role": "assistant", "content": json.dumps(vega_lite_json)}
                 )
+                print(f"\nVisualization appended to 'output.html'.")
             except json.JSONDecodeError:
                 print("\nAssistant provided invalid JSON:")
                 print(extracted_json)
@@ -114,6 +179,8 @@ def main():
             conversation.append({"role": "assistant", "content": assistant_reply})
         print("\n")
 
+    print("\nAll visualizations have been saved to 'output.html'.")
 
 if __name__ == "__main__":
     main()
+̀
