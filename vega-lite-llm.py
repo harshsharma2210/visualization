@@ -61,39 +61,33 @@ def initialize_html(html_file='output.html'):
     if not os.path.exists(html_file):
         with open(html_file, 'w') as f:
             f.write("""<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Vega-Lite Visualizations</title>
-    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .visualization {
-            margin-bottom: 50px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Vega-Lite Visualizations</h1>
-</body>
-</html>
-""")
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <title>Vega-Lite Visualizations</title>
+                <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+                <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+                <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 20px;
+                    }
+                    .visualization {
+                        margin-bottom: 50px;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Vega-Lite Visualizations</h1>
+            </body>
+            </html>
+        """)
 
 def append_json_to_html(json_data, data, html_file='output.html'):
     initialize_html(html_file)
-
-    # Generate a unique ID for the visualization
     visualization_id = f"vis_{int(time.time() * 1000)}"
-
-    # Embed the data into the Vega-Lite spec
     json_data['data'] = {'values': data}
-
-    # Prepare the HTML snippet for the new visualization
     visualization_html = f"""
     <div class="visualization">
         <div id="{visualization_id}"></div>
@@ -104,21 +98,13 @@ def append_json_to_html(json_data, data, html_file='output.html'):
         </script>
     </div>
     """
-
-    # Read the existing content except the closing </body></html> tags
     with open(html_file, 'r') as f:
         content = f.read()
-
-    # Find the position to insert the new visualization (before </body>)
     insertion_point = content.rfind('</body>')
     if insertion_point == -1:
-        # If </body> not found, append at the end
         insertion_point = len(content)
 
-    # Insert the new visualization HTML
     new_content = content[:insertion_point] + visualization_html + content[insertion_point:]
-
-    # Write the updated content back to the HTML file
     with open(html_file, 'w') as f:
         f.write(new_content)
 
