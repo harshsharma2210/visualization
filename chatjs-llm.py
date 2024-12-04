@@ -32,7 +32,9 @@ def send_message_to_openai(conversation, dataframe_info, column_info, api_key):
         {
             "role": "system",
             "content": (
-                "You are an assistant that generates Vega-Lite JSON schemas based on user requests and provided data."
+                "You are an assistant that generates **valid** Chart.js configuration objects based on user requests and provided data. "
+                "Ensure that all JSON syntax rules are followed, including quoting all keys with double quotes and avoiding any comments or placeholders. "
+                "Populate all data fields with actual numerical values extracted from the provided dataset."
             ),
         },
         {
@@ -41,7 +43,7 @@ def send_message_to_openai(conversation, dataframe_info, column_info, api_key):
         },
         {"role": "system", "content": f"Columns: {', '.join(column_info)}"},
     ]
-
+    
     messages = system_prompts + conversation
 
     try:
@@ -56,45 +58,55 @@ def send_message_to_openai(conversation, dataframe_info, column_info, api_key):
     except Exception as e:
         raise ConnectionError(f"Error communicating with OpenAI: {e}")
 
-def initialize_html(html_file='output-vega-lite.html'):
+def initialize_html(html_file='output-chartjs.html'):
     """Create the HTML file with necessary headers if it doesn't exist."""
     if not os.path.exists(html_file):
         with open(html_file, 'w') as f:
             f.write("""<!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset="UTF-8">
-                <title>Vega-Lite Visualizations</title>
-                <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-                <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-                <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        margin: 20px;
-                    }
-                    .visualization {
-                        margin-bottom: 50px;
-                    }
-                </style>
-            </head>
-            <body>
-                <h1>Vega-Lite Visualizations</h1>
-            </body>
-            </html>
-        """)
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chart.js Visualizations</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .visualization {
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chart.js Visualizations</h1>
+</body>
+</html>
+""")
 
-def append_json_to_html(json_data, data, html_file='output-vega-lite.html'):
+def append_json_to_html(config_data, data, html_file='output-chartjs.html'):
     initialize_html(html_file)
-    visualization_id = f"vis_{int(time.time() * 1000)}"
-    json_data['data'] = {'values': data}
+    chart_id = f"chart_{int(time.time() * 1000)}"
+    
+    # Removed overwriting 'data' as config_data already contains necessary data
+    # config_data['data'] = {
+    #     'datasets': config_data.get('data', {}).get('datasets', []),
+    #     'labels': data.get('labels', [])
+    # }
+    
+    # Serialize the config data to JSON
+    config_json = json.dumps(config_data, indent=2)
+    
+    # Dynamically set the chart title if available
+    chart_title = config_data.get('options', {}).get('plugins', {}).get('title', {}).get('text', 'Chart')
+    
     visualization_html = f"""
     <div class="visualization">
-        <div id="{visualization_id}"></div>
+        <h2>{chart_title}</h2>
+        <canvas id="{chart_id}"></canvas>
         <script>
-            vegaEmbed("#{visualization_id}", {json.dumps(json_data, indent=2)}).then(function(result) {{
-
-            }}).catch(console.error);
+            const ctx_{chart_id} = document.getElementById('{chart_id}').getContext('2d');
+            new Chart(ctx_{chart_id}, {config_json});
         </script>
     </div>
     """
@@ -130,8 +142,6 @@ def main():
         "\nStart chatting with the assistant. Type 'exit' or 'quit' to end the session.\n"
     )
     initialize_html()
-
-    # Convert the DataFrame to a list of records (JSON)
     data_as_json = df.to_dict(orient='records')
 
     while True:
@@ -151,17 +161,17 @@ def main():
         extracted_json = extract_json(assistant_reply)
         if extracted_json:
             try:
-                vega_lite_json = json.loads(extracted_json)
-                print("\n--- Vega-Lite JSON ---")
-                print(json.dumps(vega_lite_json, indent=2))
+                chartjs_config = json.loads(extracted_json)
+                print("\n--- Chart.js Configuration ---")
+                print(json.dumps(chartjs_config, indent=2))
                 
                 # Append the JSON to the HTML file with embedded data
-                append_json_to_html(vega_lite_json, data_as_json)
+                append_json_to_html(chartjs_config, data_as_json)
 
                 conversation.append(
-                    {"role": "assistant", "content": json.dumps(vega_lite_json)}
+                    {"role": "assistant", "content": json.dumps(chartjs_config)}
                 )
-                print(f"\nVisualization appended to 'output-vega-lite.html'.")
+                print(f"\nVisualization appended to 'output-chartjs.html'.")
             except json.JSONDecodeError:
                 print("\nAssistant provided invalid JSON:")
                 print(extracted_json)
@@ -172,7 +182,7 @@ def main():
             conversation.append({"role": "assistant", "content": assistant_reply})
         print("\n")
 
-    print("\nAll visualizations have been saved to 'output-vega-lite.html'.")
+    print("\nAll visualizations have been saved to 'output-chartjs.html'.")
 
 if __name__ == "__main__":
     main()

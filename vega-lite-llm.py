@@ -27,12 +27,15 @@ def extract_json(text):
         return match.group()
     return None
 
-def send_message_to_openai(conversation, dataframe_info, column_info, api_key):
+
+def send_message_to_openai(conversation, dataframe_info, column_info, data_sample, api_key):
     system_prompts = [
         {
             "role": "system",
             "content": (
-                "You are an assistant that generates Vega-Lite JSON schemas based on user requests and provided data."
+                "You are an assistant that generates Vega-Lite JSON specifications based on user requests and provided data."
+                " When generating the Vega-Lite spec, ensure to exclude any data as specified by the user."
+                " If the user mentions excluding certain data, make sure it is reflected in the visualization."
             ),
         },
         {
@@ -40,6 +43,10 @@ def send_message_to_openai(conversation, dataframe_info, column_info, api_key):
             "content": f"Here is a summary of the CSV data:\n{json.dumps(dataframe_info, indent=2)}",
         },
         {"role": "system", "content": f"Columns: {', '.join(column_info)}"},
+        {
+            "role": "system",
+            "content": f"Here is a sample of the data:\n{json.dumps(data_sample, indent=2)}"
+        },
     ]
 
     messages = system_prompts + conversation
@@ -107,7 +114,6 @@ def append_json_to_html(json_data, data, html_file='output-vega-lite.html'):
     new_content = content[:insertion_point] + visualization_html + content[insertion_point:]
     with open(html_file, 'w') as f:
         f.write(new_content)
-
 def main():
     try:
         api_key = get_openai_api_key()
@@ -133,6 +139,7 @@ def main():
 
     # Convert the DataFrame to a list of records (JSON)
     data_as_json = df.to_dict(orient='records')
+    data_sample = df.head(5).to_dict(orient='records')
 
     while True:
         user_input = input("You: ").strip()
@@ -143,7 +150,7 @@ def main():
             conversation.append({"role": "user", "content": user_input})
         try:
             assistant_reply = send_message_to_openai(
-                conversation, description, columns, api_key
+                conversation, description, columns, data_sample, api_key
             )
         except ConnectionError as ce:
             print(ce)
