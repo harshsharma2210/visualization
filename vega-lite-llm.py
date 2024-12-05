@@ -40,6 +40,13 @@ def send_message_to_openai(conversation, dataframe_info, column_info, data_sampl
         },
         {
             "role": "system",
+            "content": (
+                "Please respond **only** with the Vega-Lite JSON specification. Do **not** include any explanations, comments, or additional text."
+                " Ensure that the JSON is valid and properly formatted."
+            ),
+        },
+        {
+            "role": "system",
             "content": f"Here is a summary of the CSV data:\n{json.dumps(dataframe_info, indent=2)}",
         },
         {"role": "system", "content": f"Columns: {', '.join(column_info)}"},
@@ -48,7 +55,6 @@ def send_message_to_openai(conversation, dataframe_info, column_info, data_sampl
             "content": f"Here is a sample of the data:\n{json.dumps(data_sample, indent=2)}"
         },
     ]
-
     messages = system_prompts + conversation
 
     try:

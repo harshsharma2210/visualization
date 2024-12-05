@@ -1348,6 +1348,307 @@
             }).catch(console.error);
         </script>
     </div>
+    
+    <div class="visualization">
+        <div id="vis_1733389130007"></div>
+        <script>
+            vegaEmbed("#vis_1733389130007", {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A bar chart showing the number of visits per site per month.",
+  "data": {
+    "values": [
+      {
+        "Month": "2024-01",
+        "Site": "Site A",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-01",
+        "Site": "Site B",
+        "Number of Visits": 120
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site A",
+        "Number of Visits": 200
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site A",
+        "Number of Visits": 250
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site B",
+        "Number of Visits": 170
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site B",
+        "Number of Visits": 140
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site C",
+        "Number of Visits": 160
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site C",
+        "Number of Visits": 130
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site A",
+        "Number of Visits": 240
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site B",
+        "Number of Visits": 190
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site C",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site A",
+        "Number of Visits": 260
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site B",
+        "Number of Visits": 230
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site A",
+        "Number of Visits": 280
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site A",
+        "Number of Visits": 300
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site C",
+        "Number of Visits": 190
+      }
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "Month",
+      "type": "ordinal",
+      "axis": {
+        "title": "Month"
+      }
+    },
+    "y": {
+      "field": "Number of Visits",
+      "type": "quantitative",
+      "axis": {
+        "title": "Number of Visits"
+      }
+    },
+    "color": {
+      "field": "Site",
+      "type": "nominal",
+      "legend": {
+        "title": "Site"
+      }
+    }
+  }
+}).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>
+    
+    <div class="visualization">
+        <div id="vis_1733389163400"></div>
+        <script>
+            vegaEmbed("#vis_1733389163400", {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A stacked bar chart showing the number of visits per site per month.",
+  "data": {
+    "values": [
+      {
+        "Month": "2024-01",
+        "Site": "Site A",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-01",
+        "Site": "Site B",
+        "Number of Visits": 120
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site A",
+        "Number of Visits": 200
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site A",
+        "Number of Visits": 250
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site B",
+        "Number of Visits": 170
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site B",
+        "Number of Visits": 140
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site C",
+        "Number of Visits": 160
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site C",
+        "Number of Visits": 130
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site A",
+        "Number of Visits": 240
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site B",
+        "Number of Visits": 190
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site C",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site A",
+        "Number of Visits": 260
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site B",
+        "Number of Visits": 230
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site A",
+        "Number of Visits": 280
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site A",
+        "Number of Visits": 300
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site C",
+        "Number of Visits": 190
+      }
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "Month",
+      "type": "ordinal",
+      "axis": {
+        "title": "Month"
+      }
+    },
+    "y": {
+      "field": "Number of Visits",
+      "type": "quantitative",
+      "axis": {
+        "title": "Number of Visits"
+      },
+      "stack": "zero"
+    },
+    "color": {
+      "field": "Site",
+      "type": "nominal",
+      "legend": {
+        "title": "Site"
+      }
+    }
+  }
+}).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>
     </body>
             </html>
         
