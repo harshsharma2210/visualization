@@ -1649,6 +1649,1098 @@
             }).catch(console.error);
         </script>
     </div>
+    
+    <div class="visualization">
+        <div id="vis_1733389210045"></div>
+        <script>
+            vegaEmbed("#vis_1733389210045", {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A pie chart showing the total number of visits per site.",
+  "data": {
+    "values": [
+      {
+        "Month": "2024-01",
+        "Site": "Site A",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-01",
+        "Site": "Site B",
+        "Number of Visits": 120
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site A",
+        "Number of Visits": 200
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site A",
+        "Number of Visits": 250
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site B",
+        "Number of Visits": 170
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site B",
+        "Number of Visits": 140
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site C",
+        "Number of Visits": 160
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site C",
+        "Number of Visits": 130
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site A",
+        "Number of Visits": 240
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site B",
+        "Number of Visits": 190
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site C",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site A",
+        "Number of Visits": 260
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site B",
+        "Number of Visits": 230
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site A",
+        "Number of Visits": 280
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site A",
+        "Number of Visits": 300
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site C",
+        "Number of Visits": 190
+      }
+    ]
+  },
+  "transform": [
+    {
+      "aggregate": [
+        {
+          "op": "sum",
+          "field": "Number of Visits",
+          "as": "Total Visits"
+        }
+      ],
+      "groupby": [
+        "Site"
+      ]
+    }
+  ],
+  "mark": {
+    "type": "arc",
+    "innerRadius": 50
+  },
+  "encoding": {
+    "theta": {
+      "field": "Total Visits",
+      "type": "quantitative"
+    },
+    "color": {
+      "field": "Site",
+      "type": "nominal",
+      "legend": {
+        "title": "Site"
+      }
+    }
+  },
+  "view": {
+    "stroke": null
+  }
+}).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>
+    
+    <div class="visualization">
+        <div id="vis_1733389232178"></div>
+        <script>
+            vegaEmbed("#vis_1733389232178", {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A pie chart showing the total number of visits per site with tooltips.",
+  "data": {
+    "values": [
+      {
+        "Month": "2024-01",
+        "Site": "Site A",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-01",
+        "Site": "Site B",
+        "Number of Visits": 120
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site A",
+        "Number of Visits": 200
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site A",
+        "Number of Visits": 250
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site B",
+        "Number of Visits": 170
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site B",
+        "Number of Visits": 140
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site C",
+        "Number of Visits": 160
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site C",
+        "Number of Visits": 130
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site A",
+        "Number of Visits": 240
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site B",
+        "Number of Visits": 190
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site C",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site A",
+        "Number of Visits": 260
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site B",
+        "Number of Visits": 230
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site A",
+        "Number of Visits": 280
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site A",
+        "Number of Visits": 300
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site C",
+        "Number of Visits": 190
+      }
+    ]
+  },
+  "transform": [
+    {
+      "aggregate": [
+        {
+          "op": "sum",
+          "field": "Number of Visits",
+          "as": "Total Visits"
+        }
+      ],
+      "groupby": [
+        "Site"
+      ]
+    }
+  ],
+  "mark": {
+    "type": "arc",
+    "innerRadius": 50
+  },
+  "encoding": {
+    "theta": {
+      "field": "Total Visits",
+      "type": "quantitative"
+    },
+    "color": {
+      "field": "Site",
+      "type": "nominal",
+      "legend": {
+        "title": "Site"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "Site",
+        "type": "nominal",
+        "title": "Site"
+      },
+      {
+        "field": "Total Visits",
+        "type": "quantitative",
+        "title": "Total Visits"
+      }
+    ]
+  },
+  "view": {
+    "stroke": null
+  }
+}).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>
+    
+    <div class="visualization">
+        <div id="vis_1733389256915"></div>
+        <script>
+            vegaEmbed("#vis_1733389256915", {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A line chart showing the number of visits per site over time.",
+  "data": {
+    "values": [
+      {
+        "Month": "2024-01",
+        "Site": "Site A",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-01",
+        "Site": "Site B",
+        "Number of Visits": 120
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site A",
+        "Number of Visits": 200
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site A",
+        "Number of Visits": 250
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site B",
+        "Number of Visits": 170
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site B",
+        "Number of Visits": 140
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site C",
+        "Number of Visits": 160
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site C",
+        "Number of Visits": 130
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site A",
+        "Number of Visits": 240
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site B",
+        "Number of Visits": 190
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site C",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site A",
+        "Number of Visits": 260
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site B",
+        "Number of Visits": 230
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site A",
+        "Number of Visits": 280
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site A",
+        "Number of Visits": 300
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site C",
+        "Number of Visits": 190
+      }
+    ]
+  },
+  "mark": "line",
+  "encoding": {
+    "x": {
+      "field": "Month",
+      "type": "ordinal",
+      "axis": {
+        "title": "Month"
+      }
+    },
+    "y": {
+      "field": "Number of Visits",
+      "type": "quantitative",
+      "axis": {
+        "title": "Number of Visits"
+      }
+    },
+    "color": {
+      "field": "Site",
+      "type": "nominal",
+      "legend": {
+        "title": "Site"
+      }
+    }
+  }
+}).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>
+    
+    <div class="visualization">
+        <div id="vis_1733389286251"></div>
+        <script>
+            vegaEmbed("#vis_1733389286251", {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "An interactive line chart showing the number of visits per site over time.",
+  "data": {
+    "values": [
+      {
+        "Month": "2024-01",
+        "Site": "Site A",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-01",
+        "Site": "Site B",
+        "Number of Visits": 120
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site A",
+        "Number of Visits": 200
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site A",
+        "Number of Visits": 250
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site B",
+        "Number of Visits": 170
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site B",
+        "Number of Visits": 140
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site C",
+        "Number of Visits": 160
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site C",
+        "Number of Visits": 130
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site A",
+        "Number of Visits": 240
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site B",
+        "Number of Visits": 190
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site C",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site A",
+        "Number of Visits": 260
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site B",
+        "Number of Visits": 230
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site A",
+        "Number of Visits": 280
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site A",
+        "Number of Visits": 300
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site C",
+        "Number of Visits": 190
+      }
+    ]
+  },
+  "mark": {
+    "type": "line",
+    "point": true
+  },
+  "encoding": {
+    "x": {
+      "field": "Month",
+      "type": "ordinal",
+      "axis": {
+        "title": "Month"
+      }
+    },
+    "y": {
+      "field": "Number of Visits",
+      "type": "quantitative",
+      "axis": {
+        "title": "Number of Visits"
+      }
+    },
+    "color": {
+      "field": "Site",
+      "type": "nominal",
+      "legend": {
+        "title": "Site"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "Month",
+        "type": "ordinal",
+        "title": "Month"
+      },
+      {
+        "field": "Site",
+        "type": "nominal",
+        "title": "Site"
+      },
+      {
+        "field": "Number of Visits",
+        "type": "quantitative",
+        "title": "Number of Visits"
+      }
+    ]
+  },
+  "selection": {
+    "grid": {
+      "type": "interval",
+      "bind": "scales"
+    }
+  }
+}).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>
+    
+    <div class="visualization">
+        <div id="vis_1733391824001"></div>
+        <script>
+            vegaEmbed("#vis_1733391824001", {
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "Month",
+      "type": "ordinal",
+      "axis": {
+        "title": "Month"
+      }
+    },
+    "y": {
+      "field": "Number of Visits",
+      "type": "quantitative",
+      "axis": {
+        "title": "Number of Visits"
+      }
+    },
+    "color": {
+      "field": "Site",
+      "type": "nominal",
+      "legend": {
+        "title": "Site"
+      }
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "Month": "2024-01",
+        "Site": "Site A",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-01",
+        "Site": "Site B",
+        "Number of Visits": 120
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site A",
+        "Number of Visits": 200
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site A",
+        "Number of Visits": 250
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site B",
+        "Number of Visits": 170
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site B",
+        "Number of Visits": 140
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site C",
+        "Number of Visits": 160
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site C",
+        "Number of Visits": 130
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site A",
+        "Number of Visits": 240
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site B",
+        "Number of Visits": 190
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site C",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site A",
+        "Number of Visits": 260
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site B",
+        "Number of Visits": 230
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site A",
+        "Number of Visits": 280
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site A",
+        "Number of Visits": 300
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site C",
+        "Number of Visits": 190
+      }
+    ]
+  }
+}).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>
+    
+    <div class="visualization">
+        <div id="vis_1733391842385"></div>
+        <script>
+            vegaEmbed("#vis_1733391842385", {
+  "mark": "line",
+  "encoding": {
+    "x": {
+      "field": "Month",
+      "type": "ordinal",
+      "axis": {
+        "title": "Month"
+      }
+    },
+    "y": {
+      "field": "Number of Visits",
+      "type": "quantitative",
+      "axis": {
+        "title": "Number of Visits"
+      }
+    },
+    "color": {
+      "field": "Site",
+      "type": "nominal",
+      "legend": {
+        "title": "Site"
+      }
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "Month": "2024-01",
+        "Site": "Site A",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-01",
+        "Site": "Site B",
+        "Number of Visits": 120
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site A",
+        "Number of Visits": 200
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site A",
+        "Number of Visits": 250
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site B",
+        "Number of Visits": 170
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site B",
+        "Number of Visits": 140
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site C",
+        "Number of Visits": 160
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site C",
+        "Number of Visits": 130
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site A",
+        "Number of Visits": 240
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site B",
+        "Number of Visits": 190
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site C",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site A",
+        "Number of Visits": 260
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site B",
+        "Number of Visits": 230
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site A",
+        "Number of Visits": 280
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site A",
+        "Number of Visits": 300
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site C",
+        "Number of Visits": 190
+      }
+    ]
+  }
+}).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>
+    
+    <div class="visualization">
+        <div id="vis_1733391866540"></div>
+        <script>
+            vegaEmbed("#vis_1733391866540", {
+  "mark": "arc",
+  "encoding": {
+    "theta": {
+      "field": "Number of Visits",
+      "type": "quantitative"
+    },
+    "color": {
+      "field": "Site",
+      "type": "nominal",
+      "legend": {
+        "title": "Site"
+      }
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "Month": "2024-01",
+        "Site": "Site A",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-01",
+        "Site": "Site B",
+        "Number of Visits": 120
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site A",
+        "Number of Visits": 200
+      },
+      {
+        "Month": "2024-02",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site A",
+        "Number of Visits": 250
+      },
+      {
+        "Month": "2024-03",
+        "Site": "Site B",
+        "Number of Visits": 170
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site B",
+        "Number of Visits": 140
+      },
+      {
+        "Month": "2024-04",
+        "Site": "Site C",
+        "Number of Visits": 160
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-05",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site C",
+        "Number of Visits": 130
+      },
+      {
+        "Month": "2024-06",
+        "Site": "Site A",
+        "Number of Visits": 240
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site B",
+        "Number of Visits": 190
+      },
+      {
+        "Month": "2024-07",
+        "Site": "Site C",
+        "Number of Visits": 150
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site A",
+        "Number of Visits": 260
+      },
+      {
+        "Month": "2024-08",
+        "Site": "Site B",
+        "Number of Visits": 230
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site C",
+        "Number of Visits": 180
+      },
+      {
+        "Month": "2024-09",
+        "Site": "Site A",
+        "Number of Visits": 220
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site A",
+        "Number of Visits": 280
+      },
+      {
+        "Month": "2024-10",
+        "Site": "Site B",
+        "Number of Visits": 210
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site A",
+        "Number of Visits": 300
+      },
+      {
+        "Month": "2024-11",
+        "Site": "Site C",
+        "Number of Visits": 190
+      }
+    ]
+  }
+}).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>
     </body>
             </html>
         

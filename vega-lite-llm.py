@@ -34,8 +34,9 @@ def send_message_to_openai(conversation, dataframe_info, column_info, data_sampl
             "role": "system",
             "content": (
                 "You are an assistant that generates Vega-Lite JSON specifications based on user requests and provided data."
-                " When generating the Vega-Lite spec, ensure to exclude any data as specified by the user."
-                " If the user mentions excluding certain data, make sure it is reflected in the visualization."
+                " Do **not** include the 'data' field with 'values' in your specifications."
+                " Assume that the data will be provided externally by the application."
+                " Focus solely on defining the visualization marks, encodings, and other specifications."
             ),
         },
         {
@@ -53,6 +54,13 @@ def send_message_to_openai(conversation, dataframe_info, column_info, data_sampl
         {
             "role": "system",
             "content": f"Here is a sample of the data:\n{json.dumps(data_sample, indent=2)}"
+        },
+        {
+            "role": "system",
+            "content": (
+                "Do **not** include the 'data' field in your Vega-Lite specification."
+                " The data will be injected separately by the application."
+            ),
         },
     ]
     messages = system_prompts + conversation
