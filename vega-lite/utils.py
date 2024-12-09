@@ -2,6 +2,7 @@
 import os
 import tempfile
 import webbrowser
+from copy import deepcopy
 
 def get_openai_api_key():
     api_key = os.getenv("OPENAI_API_KEY")
@@ -31,3 +32,13 @@ def display_chart(chart):
         print(f"Chart saved and opened in default browser: {temp_html}")
     except Exception as e:
         print(f"Failed to display chart: {e}")
+
+
+def deep_merge(dict1, dict2):
+    merged = deepcopy(dict1)
+    for key, value in dict2.items():
+        if key in merged and isinstance(merged[key], dict) and isinstance(value, dict):
+            merged[key] = deep_merge(merged[key], value)
+        else:
+            merged[key] = deepcopy(value)
+    return merged

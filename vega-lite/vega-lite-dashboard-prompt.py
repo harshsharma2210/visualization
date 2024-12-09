@@ -29,15 +29,15 @@ def extract_json(text):
 
 def get_base_prompt():
     base_prompt = (
-        "The chart should adhere to the following rules:\n"
+        "Please provide the chart configuration in JSON format adhering to the following rules:\n"
         "- The x-axis and y-axis should not have titles, but grid lines must be present for both axes.\n"
         "- Ensure that the x-axis labels are tilted at an appropriate angle to prevent overlap.\n"
         "- Use Indian numbering conventions for the y-axis (e.g., lakhs, crores).\n"
         "- Include interactivity such as tooltips or other interactions.\n"
-        "- The legend should always be placed outside the chart, at the bottom-left side, *below* the chart, without a title.\n"
         "- Format the axes, legend, and grid lines to ensure readability and clarity.\n"
+        "- The chart should be a line graph with point markers.\n"
+        "- The legend should be positioned below the chart with no title.\n"       
     )
-
     return base_prompt
 def send_message_to_openai(conversation, dataframe_info, column_info, data_sample, api_key):
     system_prompts = [
@@ -74,7 +74,7 @@ def send_message_to_openai(conversation, dataframe_info, column_info, data_sampl
                 "The data will be injected separately by the application."
             ),
         },
-         {
+        {
             "role": "system",
             "content": (get_base_prompt()),
         },

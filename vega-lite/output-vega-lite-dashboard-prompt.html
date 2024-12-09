@@ -1,533 +1,128 @@
 <!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset="UTF-8">
-                <title>Vega-Lite Visualizations dashboard-prompt</title>
-                <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-                <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-                <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        margin: 20px;
-                    }
-                    .visualization {
-                        margin-bottom: 50px;
-                    }
-                </style>
-            </head>
-            <body>
-                <h1>Vega-Lite Visualizations dashboard-prompt</h1>
-            
-    <div class="visualization">
-        <div id="vis_1733460818575"></div>
-        <script>
-            vegaEmbed("#vis_1733460818575", {
-  "mark": "line",
-  "encoding": {
-    "x": {
-      "field": "Month",
-      "type": "temporal",
-      "axis": {
-        "grid": true,
-        "labelAngle": -45
-      }
-    },
-    "y": {
-      "field": "Number of Visits",
-      "type": "quantitative",
-      "axis": {
-        "grid": true,
-        "format": "s"
-      }
-    },
-    "color": {
-      "field": "Site",
-      "type": "nominal",
-      "legend": {
-        "orient": "bottom-left"
-      }
-    },
-    "tooltip": [
-      {
-        "field": "Month",
-        "type": "temporal"
-      },
-      {
-        "field": "Site",
-        "type": "nominal"
-      },
-      {
-        "field": "Number of Visits",
-        "type": "quantitative",
-        "format": "s"
-      }
-    ]
-  },
-  "data": {
-    "values": [
-      {
-        "Month": "2024-01",
-        "Site": "Site A",
-        "Number of Visits": 150
-      },
-      {
-        "Month": "2024-01",
-        "Site": "Site B",
-        "Number of Visits": 120
-      },
-      {
-        "Month": "2024-02",
-        "Site": "Site A",
-        "Number of Visits": 200
-      },
-      {
-        "Month": "2024-02",
-        "Site": "Site C",
-        "Number of Visits": 180
-      },
-      {
-        "Month": "2024-03",
-        "Site": "Site A",
-        "Number of Visits": 250
-      },
-      {
-        "Month": "2024-03",
-        "Site": "Site B",
-        "Number of Visits": 170
-      },
-      {
-        "Month": "2024-04",
-        "Site": "Site B",
-        "Number of Visits": 140
-      },
-      {
-        "Month": "2024-04",
-        "Site": "Site C",
-        "Number of Visits": 160
-      },
-      {
-        "Month": "2024-05",
-        "Site": "Site A",
-        "Number of Visits": 220
-      },
-      {
-        "Month": "2024-05",
-        "Site": "Site B",
-        "Number of Visits": 210
-      },
-      {
-        "Month": "2024-06",
-        "Site": "Site C",
-        "Number of Visits": 130
-      },
-      {
-        "Month": "2024-06",
-        "Site": "Site A",
-        "Number of Visits": 240
-      },
-      {
-        "Month": "2024-07",
-        "Site": "Site B",
-        "Number of Visits": 190
-      },
-      {
-        "Month": "2024-07",
-        "Site": "Site C",
-        "Number of Visits": 150
-      },
-      {
-        "Month": "2024-08",
-        "Site": "Site A",
-        "Number of Visits": 260
-      },
-      {
-        "Month": "2024-08",
-        "Site": "Site B",
-        "Number of Visits": 230
-      },
-      {
-        "Month": "2024-09",
-        "Site": "Site C",
-        "Number of Visits": 180
-      },
-      {
-        "Month": "2024-09",
-        "Site": "Site A",
-        "Number of Visits": 220
-      },
-      {
-        "Month": "2024-10",
-        "Site": "Site A",
-        "Number of Visits": 280
-      },
-      {
-        "Month": "2024-10",
-        "Site": "Site B",
-        "Number of Visits": 210
-      },
-      {
-        "Month": "2024-11",
-        "Site": "Site A",
-        "Number of Visits": 300
-      },
-      {
-        "Month": "2024-11",
-        "Site": "Site C",
-        "Number of Visits": 190
-      }
-    ]
-  }
-}).then(function(result) {
+<html>
 
-            }).catch(console.error);
-        </script>
-    </div>
-    
-    <div class="visualization">
-        <div id="vis_1733460975041"></div>
-        <script>
-            vegaEmbed("#vis_1733460975041", {
-  "mark": "line",
-  "encoding": {
-    "x": {
-      "field": "Month",
-      "type": "temporal",
-      "axis": {
-        "grid": true,
-        "labelAngle": -45
-      }
-    },
-    "y": {
-      "field": "Number of Visits",
-      "type": "quantitative",
-      "axis": {
-        "grid": true,
-        "format": "s"
-      }
-    },
-    "color": {
-      "field": "Site",
-      "type": "nominal",
-      "legend": {
-        "orient": "bottom-left"
-      }
-    },
-    "tooltip": [
-      {
-        "field": "Month",
-        "type": "temporal"
-      },
-      {
-        "field": "Site",
-        "type": "nominal"
-      },
-      {
-        "field": "Number of Visits",
-        "type": "quantitative",
-        "format": "s"
-      }
-    ]
-  },
-  "data": {
-    "values": [
-      {
-        "Month": "2024-01",
-        "Site": "Site A",
-        "Number of Visits": 150
-      },
-      {
-        "Month": "2024-01",
-        "Site": "Site B",
-        "Number of Visits": 120
-      },
-      {
-        "Month": "2024-02",
-        "Site": "Site A",
-        "Number of Visits": 200
-      },
-      {
-        "Month": "2024-02",
-        "Site": "Site C",
-        "Number of Visits": 180
-      },
-      {
-        "Month": "2024-03",
-        "Site": "Site A",
-        "Number of Visits": 250
-      },
-      {
-        "Month": "2024-03",
-        "Site": "Site B",
-        "Number of Visits": 170
-      },
-      {
-        "Month": "2024-04",
-        "Site": "Site B",
-        "Number of Visits": 140
-      },
-      {
-        "Month": "2024-04",
-        "Site": "Site C",
-        "Number of Visits": 160
-      },
-      {
-        "Month": "2024-05",
-        "Site": "Site A",
-        "Number of Visits": 220
-      },
-      {
-        "Month": "2024-05",
-        "Site": "Site B",
-        "Number of Visits": 210
-      },
-      {
-        "Month": "2024-06",
-        "Site": "Site C",
-        "Number of Visits": 130
-      },
-      {
-        "Month": "2024-06",
-        "Site": "Site A",
-        "Number of Visits": 240
-      },
-      {
-        "Month": "2024-07",
-        "Site": "Site B",
-        "Number of Visits": 190
-      },
-      {
-        "Month": "2024-07",
-        "Site": "Site C",
-        "Number of Visits": 150
-      },
-      {
-        "Month": "2024-08",
-        "Site": "Site A",
-        "Number of Visits": 260
-      },
-      {
-        "Month": "2024-08",
-        "Site": "Site B",
-        "Number of Visits": 230
-      },
-      {
-        "Month": "2024-09",
-        "Site": "Site C",
-        "Number of Visits": 180
-      },
-      {
-        "Month": "2024-09",
-        "Site": "Site A",
-        "Number of Visits": 220
-      },
-      {
-        "Month": "2024-10",
-        "Site": "Site A",
-        "Number of Visits": 280
-      },
-      {
-        "Month": "2024-10",
-        "Site": "Site B",
-        "Number of Visits": 210
-      },
-      {
-        "Month": "2024-11",
-        "Site": "Site A",
-        "Number of Visits": 300
-      },
-      {
-        "Month": "2024-11",
-        "Site": "Site C",
-        "Number of Visits": 190
-      }
-    ]
-  }
-}).then(function(result) {
+<head>
+  <meta charset="UTF-8">
+  <title>Vega-Lite Visualizations dashboard-prompt</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
 
-            }).catch(console.error);
-        </script>
-    </div>
-    
-    <div class="visualization">
-        <div id="vis_1733461642775"></div>
-        <script>
-            vegaEmbed("#vis_1733461642775", {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "mark": {
-    "type": "line",
-    "point": true
-  },
-  "encoding": {
-    "x": {
-      "field": "Month",
-      "type": "temporal",
-      "axis": {
-        "grid": true,
-        "labelAngle": -45,
-        "title": null
-      }
-    },
-    "y": {
-      "field": "Number of Visits",
-      "type": "quantitative",
-      "axis": {
-        "grid": true,
-        "title": null,
-        "format": "s"
-      }
-    },
-    "color": {
-      "field": "Site",
-      "type": "nominal",
-      "legend": {
-        "orient": "bottom-left",
-        "title": null
-      }
-    },
-    "tooltip": [
-      {
-        "field": "Month",
-        "type": "temporal",
-        "title": "Month"
-      },
-      {
-        "field": "Site",
-        "type": "nominal",
-        "title": "Site"
-      },
-      {
-        "field": "Number of Visits",
-        "type": "quantitative",
-        "title": "Visits",
-        "format": "s"
-      }
-    ]
-  },
-  "data": {
-    "values": [
-      {
-        "Month": "2024-01",
-        "Site": "Site A",
-        "Number of Visits": 150
-      },
-      {
-        "Month": "2024-01",
-        "Site": "Site B",
-        "Number of Visits": 120
-      },
-      {
-        "Month": "2024-02",
-        "Site": "Site A",
-        "Number of Visits": 200
-      },
-      {
-        "Month": "2024-02",
-        "Site": "Site C",
-        "Number of Visits": 180
-      },
-      {
-        "Month": "2024-03",
-        "Site": "Site A",
-        "Number of Visits": 250
-      },
-      {
-        "Month": "2024-03",
-        "Site": "Site B",
-        "Number of Visits": 170
-      },
-      {
-        "Month": "2024-04",
-        "Site": "Site B",
-        "Number of Visits": 140
-      },
-      {
-        "Month": "2024-04",
-        "Site": "Site C",
-        "Number of Visits": 160
-      },
-      {
-        "Month": "2024-05",
-        "Site": "Site A",
-        "Number of Visits": 220
-      },
-      {
-        "Month": "2024-05",
-        "Site": "Site B",
-        "Number of Visits": 210
-      },
-      {
-        "Month": "2024-06",
-        "Site": "Site C",
-        "Number of Visits": 130
-      },
-      {
-        "Month": "2024-06",
-        "Site": "Site A",
-        "Number of Visits": 240
-      },
-      {
-        "Month": "2024-07",
-        "Site": "Site B",
-        "Number of Visits": 190
-      },
-      {
-        "Month": "2024-07",
-        "Site": "Site C",
-        "Number of Visits": 150
-      },
-      {
-        "Month": "2024-08",
-        "Site": "Site A",
-        "Number of Visits": 260
-      },
-      {
-        "Month": "2024-08",
-        "Site": "Site B",
-        "Number of Visits": 230
-      },
-      {
-        "Month": "2024-09",
-        "Site": "Site C",
-        "Number of Visits": 180
-      },
-      {
-        "Month": "2024-09",
-        "Site": "Site A",
-        "Number of Visits": 220
-      },
-      {
-        "Month": "2024-10",
-        "Site": "Site A",
-        "Number of Visits": 280
-      },
-      {
-        "Month": "2024-10",
-        "Site": "Site B",
-        "Number of Visits": 210
-      },
-      {
-        "Month": "2024-11",
-        "Site": "Site A",
-        "Number of Visits": 300
-      },
-      {
-        "Month": "2024-11",
-        "Site": "Site C",
-        "Number of Visits": 190
-      }
-    ]
-  }
-}).then(function(result) {
+    .visualization {
+      margin-bottom: 50px;
+    }
+  </style>
+</head>
 
-            }).catch(console.error);
-        </script>
-    </div>
-    
+<body>
+  <h1>Vega-Lite Visualizations dashboard-prompt</h1>
+
+  <div class="visualization">
+    <div id="vis_1733462763056"></div>
+    <script>
+      vegaEmbed("#vis_1733462763056", {
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "mark": {
+          "type": "line",
+          "point": true,
+          "tooltip": true
+        },
+        "encoding": {
+          "x": {
+            "field": "month",
+            "type": "ordinal",
+            "axis": {
+              "grid": true,
+              "labelAngle": -45,
+              "title": null
+            }
+          },
+          "y": {
+            "field": "value",
+            "type": "quantitative",
+            "axis": {
+              "grid": true,
+              "title": null,
+              "format": "s"
+            }
+          },
+          "color": {
+            "field": "category",
+            "type": "nominal",
+            "legend": {
+              "title": null
+            }
+          }
+        },
+        "data": {
+          "values": [
+            {
+              "month": "April 2023",
+              "last year": 0,
+              "this year": 20955600
+            },
+            {
+              "month": "May 2023",
+              "last year": 0,
+              "this year": 18350000
+            },
+            {
+              "month": "June 2023",
+              "last year": 68310,
+              "this year": 12943580
+            },
+            {
+              "month": "July 2023",
+              "last year": 21601,
+              "this year": 144888868
+            },
+            {
+              "month": "August 2023",
+              "last year": 134120180,
+              "this year": 102848517
+            },
+            {
+              "month": "September 2023",
+              "last year": 41649000,
+              "this year": 23610592
+            },
+            {
+              "month": "October 2023",
+              "last year": 7917182,
+              "this year": 61784552
+            },
+            {
+              "month": "November 2023",
+              "last year": 99342565,
+              "this year": 21379945
+            },
+            {
+              "month": "December 2023",
+              "last year": 101000,
+              "this year": 31355587
+            },
+            {
+              "month": "January 2024",
+              "last year": 79711506,
+              "this year": 56738564
+            }
+          ]
+        }
+      }).then(function (result) {
+
+      }).catch(console.error);
+    </script>
+  </div>
+
     <div class="visualization">
-        <div id="vis_1733461751212"></div>
+        <div id="vis_1733462907407"></div>
         <script>
-            vegaEmbed("#vis_1733461751212", {
+            vegaEmbed("#vis_1733462907407", {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "mark": {
     "type": "line",
@@ -556,7 +151,7 @@
       "field": "variable",
       "type": "nominal",
       "legend": {
-        "orient": "bottom-left",
+        "orient": "bottom",
         "title": null
       }
     },
@@ -637,11 +232,11 @@
     </div>
     
     <div class="visualization">
-        <div id="vis_1733461936619"></div>
+        <div id="vis_1733462942244"></div>
         <script>
-            vegaEmbed("#vis_1733461936619", {
+            vegaEmbed("#vis_1733462942244", {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Line chart comparing values from last year and this year.",
+  "description": "Line chart comparing 'last year' and 'this year' data over months.",
   "mark": "line",
   "encoding": {
     "x": {
@@ -733,10 +328,9 @@
     </div>
     
     <div class="visualization">
-        <div id="vis_1733462031099"></div>
+        <div id="vis_1733463629105"></div>
         <script>
-            vegaEmbed("#vis_1733462031099", {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            vegaEmbed("#vis_1733463629105", {
   "mark": {
     "type": "line",
     "point": true
@@ -747,7 +341,8 @@
       "type": "ordinal",
       "axis": {
         "labelAngle": -45,
-        "grid": true
+        "grid": true,
+        "title": null
       }
     },
     "y": {
@@ -755,14 +350,15 @@
       "type": "quantitative",
       "axis": {
         "grid": true,
+        "title": null,
         "format": "s"
       }
     },
     "color": {
-      "field": "year",
+      "field": "category",
       "type": "nominal",
       "legend": {
-        "orient": "bottom-left",
+        "orient": "bottom",
         "title": null
       }
     },
@@ -772,7 +368,7 @@
         "type": "ordinal"
       },
       {
-        "field": "year",
+        "field": "category",
         "type": "nominal"
       },
       {
@@ -782,18 +378,104 @@
       }
     ]
   },
-  "transform": [
-    {
-      "fold": [
-        "last year",
-        "this year"
-      ],
-      "as": [
-        "year",
-        "value"
-      ]
+  "data": {
+    "values": [
+      {
+        "month": "April 2023",
+        "last year": 0,
+        "this year": 20955600
+      },
+      {
+        "month": "May 2023",
+        "last year": 0,
+        "this year": 18350000
+      },
+      {
+        "month": "June 2023",
+        "last year": 68310,
+        "this year": 12943580
+      },
+      {
+        "month": "July 2023",
+        "last year": 21601,
+        "this year": 144888868
+      },
+      {
+        "month": "August 2023",
+        "last year": 134120180,
+        "this year": 102848517
+      },
+      {
+        "month": "September 2023",
+        "last year": 41649000,
+        "this year": 23610592
+      },
+      {
+        "month": "October 2023",
+        "last year": 7917182,
+        "this year": 61784552
+      },
+      {
+        "month": "November 2023",
+        "last year": 99342565,
+        "this year": 21379945
+      },
+      {
+        "month": "December 2023",
+        "last year": 101000,
+        "this year": 31355587
+      },
+      {
+        "month": "January 2024",
+        "last year": 79711506,
+        "this year": 56738564
+      }
+    ]
+  }
+}).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>
+    
+    <div class="visualization">
+        <div id="vis_1733463780027"></div>
+        <script>
+            vegaEmbed("#vis_1733463780027", {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "mark": {
+    "type": "line",
+    "point": true,
+    "tooltip": true
+  },
+  "encoding": {
+    "x": {
+      "field": "month",
+      "type": "ordinal",
+      "axis": {
+        "grid": true,
+        "labelAngle": -45,
+        "title": null
+      }
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "axis": {
+        "grid": true,
+        "title": null,
+        "format": "s"
+      }
+    },
+    "color": {
+      "field": "variable",
+      "type": "nominal",
+      "legend": {
+        "orient": "bottom",
+        "title": null
+      }
     }
-  ],
+  },
   "data": {
     "values": [
       {
@@ -854,5 +536,5 @@
         </script>
     </div>
     </body>
-            </html>
-        
+
+</html>
