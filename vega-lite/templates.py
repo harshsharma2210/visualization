@@ -21,6 +21,7 @@ line_chart_template = {
             "labelFontSize": 12,
             "gridColor": "#ccc",
             "gridOpacity": 0.5,
+            "gridDash": [2, 2],
         },
         "axisX": {"labelAngle": -45},
         "axisY": {},

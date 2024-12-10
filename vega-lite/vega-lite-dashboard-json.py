@@ -36,7 +36,8 @@ def send_message_to_openai(conversation, dataframe_info, column_info, data_sampl
                 "Do **not** include the 'data' field with 'values' in your specifications. "
                 "Assume that the data will be provided externally by the application. "
                 "Focus solely on defining the visualization marks, encodings, and other specifications. "
-                "Ensure that tooltips are included to display relevant fields when hovering over data points."
+                "Ensure that tooltips are included to display relevant fields when hovering over data points. "
+                "Display the y-axis values using Indian numbering conventions (K, L, Cr) by using a label expression."
             ),
         },
         {
