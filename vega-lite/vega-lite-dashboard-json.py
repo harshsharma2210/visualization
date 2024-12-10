@@ -10,6 +10,7 @@ from utils import (
     read_csv,
     infer_csv_structure,
     extract_json,
+    extract_chart_type
 )
 from templates import line_chart_template, bar_chart_template, pie_chart_template
 
@@ -18,11 +19,12 @@ openai.api_key = get_openai_api_key()
 
 def select_template(chart_type):
     templates = {
-        "line": line_chart_template,
-        "bar": bar_chart_template,
-        "pie": pie_chart_template,
+        "line": line_chart_template, 
+        "bar": bar_chart_template,    
+        "arc": pie_chart_template    
     }
     return templates.get(chart_type)
+
 
 
 def send_message_to_openai(conversation, dataframe_info, column_info, data_sample):
@@ -180,7 +182,7 @@ def main():
             continue
         extracted_json = extract_json(assistant_reply)
         if extracted_json:
-            chart_type, spec = extract_visualization_parameters(extracted_json)
+            chart_type = extract_chart_type(extracted_json)
             if not chart_type:
                 print("\nAssistant provided invalid or incomplete JSON.")
                 conversation.append({"role": "assistant", "content": extracted_json})
