@@ -2,7 +2,7 @@
             <html>
             <head>
                 <meta charset="UTF-8">
-                <title>Vega-Lite Visualizations dashboard-prompt</title>
+                <title>Vega-Lite Visualizations</title>
                 <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
                 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
                 <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -17,14 +17,12 @@
                 </style>
             </head>
             <body>
-                <h1>Vega-Lite Visualizations dashboard-prompt</h1>
+                <h1>Vega-Lite Visualizations</h1>
             
     <div class="visualization">
-        <div id="vis_1733731599657"></div>
+        <div id="vis_1733731213734"></div>
         <script>
-            vegaEmbed("#vis_1733731599657", {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Pie chart showing the distribution of values for 'this year' across different months.",
+            vegaEmbed("#vis_1733731213734", {
   "mark": "arc",
   "encoding": {
     "theta": {
@@ -97,127 +95,9 @@
     </div>
     
     <div class="visualization">
-        <div id="vis_1733731612533"></div>
+        <div id="vis_1733731237362"></div>
         <script>
-            vegaEmbed("#vis_1733731612533", {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "mark": {
-    "type": "line",
-    "point": true
-  },
-  "encoding": {
-    "x": {
-      "field": "x",
-      "type": "quantitative",
-      "axis": {
-        "title": null,
-        "grid": true,
-        "labelAngle": -45
-      }
-    },
-    "y": {
-      "field": "y",
-      "type": "quantitative",
-      "axis": {
-        "title": null,
-        "grid": true,
-        "format": "~s"
-      }
-    },
-    "tooltip": [
-      {
-        "field": "x",
-        "type": "quantitative"
-      },
-      {
-        "field": "y",
-        "type": "quantitative"
-      }
-    ]
-  },
-  "config": {
-    "axis": {
-      "gridColor": "#888888",
-      "gridOpacity": 0.1,
-      "labelColor": "#000000",
-      "labelPadding": 8,
-      "tickColor": "#000000",
-      "tickWidth": 1.5
-    },
-    "legend": {
-      "orient": "bottom",
-      "title": null,
-      "labelColor": "#000000",
-      "labelFontSize": 12
-    },
-    "numberFormat": "crore"
-  },
-  "data": {
-    "values": [
-      {
-        "month": "April 2023",
-        "last year": 0,
-        "this year": 20955600
-      },
-      {
-        "month": "May 2023",
-        "last year": 0,
-        "this year": 18350000
-      },
-      {
-        "month": "June 2023",
-        "last year": 68310,
-        "this year": 12943580
-      },
-      {
-        "month": "July 2023",
-        "last year": 21601,
-        "this year": 144888868
-      },
-      {
-        "month": "August 2023",
-        "last year": 134120180,
-        "this year": 102848517
-      },
-      {
-        "month": "September 2023",
-        "last year": 41649000,
-        "this year": 23610592
-      },
-      {
-        "month": "October 2023",
-        "last year": 7917182,
-        "this year": 61784552
-      },
-      {
-        "month": "November 2023",
-        "last year": 99342565,
-        "this year": 21379945
-      },
-      {
-        "month": "December 2023",
-        "last year": 101000,
-        "this year": 31355587
-      },
-      {
-        "month": "January 2024",
-        "last year": 79711506,
-        "this year": 56738564
-      }
-    ]
-  }
-}).then(function(result) {
-
-            }).catch(console.error);
-        </script>
-    </div>
-    
-    <div class="visualization">
-        <div id="vis_1733732301124"></div>
-        <script>
-            vegaEmbed("#vis_1733732301124", {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Pie chart showing the distribution of values for 'this year' across different months.",
+            vegaEmbed("#vis_1733731237362", {
   "mark": "arc",
   "encoding": {
     "theta": {
@@ -226,7 +106,13 @@
     },
     "color": {
       "field": "month",
-      "type": "nominal"
+      "type": "nominal",
+      "scale": {
+        "range": [
+          "black",
+          "orange"
+        ]
+      }
     }
   },
   "data": {
@@ -290,57 +176,178 @@
     </div>
     
     <div class="visualization">
-        <div id="vis_1733732312937"></div>
+        <div id="vis_1733731261509"></div>
         <script>
-            vegaEmbed("#vis_1733732312937", {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "mark": {
-    "type": "line",
-    "point": true
-  },
+            vegaEmbed("#vis_1733731261509", {
+  "mark": "line",
   "encoding": {
     "x": {
-      "field": "x",
-      "type": "quantitative",
-      "axis": {
-        "title": null,
-        "grid": true,
-        "labelAngle": -45
-      }
+      "field": "month",
+      "type": "ordinal",
+      "title": "Month"
     },
     "y": {
-      "field": "y",
+      "field": "this year",
       "type": "quantitative",
-      "axis": {
-        "title": null,
-        "grid": true,
-        "format": "~s"
-      }
+      "title": "This Year"
     },
-    "tooltip": [
+    "color": {
+      "value": "orange"
+    }
+  },
+  "data": {
+    "values": [
       {
-        "field": "x",
-        "type": "quantitative"
+        "month": "April 2023",
+        "last year": 0,
+        "this year": 20955600
       },
       {
-        "field": "y",
-        "type": "quantitative"
+        "month": "May 2023",
+        "last year": 0,
+        "this year": 18350000
+      },
+      {
+        "month": "June 2023",
+        "last year": 68310,
+        "this year": 12943580
+      },
+      {
+        "month": "July 2023",
+        "last year": 21601,
+        "this year": 144888868
+      },
+      {
+        "month": "August 2023",
+        "last year": 134120180,
+        "this year": 102848517
+      },
+      {
+        "month": "September 2023",
+        "last year": 41649000,
+        "this year": 23610592
+      },
+      {
+        "month": "October 2023",
+        "last year": 7917182,
+        "this year": 61784552
+      },
+      {
+        "month": "November 2023",
+        "last year": 99342565,
+        "this year": 21379945
+      },
+      {
+        "month": "December 2023",
+        "last year": 101000,
+        "this year": 31355587
+      },
+      {
+        "month": "January 2024",
+        "last year": 79711506,
+        "this year": 56738564
       }
     ]
-  },
-  "config": {
-    "axis": {
-      "gridColor": "#888888",
-      "gridOpacity": 0.1,
-      "labelColor": "#000000",
-      "labelFontSize": 12,
-      "titleFontSize": 14
+  }
+}).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>
+    
+    <div class="visualization">
+        <div id="vis_1733731278677"></div>
+        <script>
+            vegaEmbed("#vis_1733731278677", {
+  "mark": "line",
+  "encoding": {
+    "x": {
+      "field": "month",
+      "type": "ordinal",
+      "title": "Month"
     },
-    "legend": {
-      "orient": "bottom",
-      "title": null,
-      "labelColor": "#000000",
-      "labelFontSize": 12
+    "y": {
+      "field": "this year",
+      "type": "quantitative",
+      "title": "This Year"
+    },
+    "color": {
+      "value": "pink"
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "month": "April 2023",
+        "last year": 0,
+        "this year": 20955600
+      },
+      {
+        "month": "May 2023",
+        "last year": 0,
+        "this year": 18350000
+      },
+      {
+        "month": "June 2023",
+        "last year": 68310,
+        "this year": 12943580
+      },
+      {
+        "month": "July 2023",
+        "last year": 21601,
+        "this year": 144888868
+      },
+      {
+        "month": "August 2023",
+        "last year": 134120180,
+        "this year": 102848517
+      },
+      {
+        "month": "September 2023",
+        "last year": 41649000,
+        "this year": 23610592
+      },
+      {
+        "month": "October 2023",
+        "last year": 7917182,
+        "this year": 61784552
+      },
+      {
+        "month": "November 2023",
+        "last year": 99342565,
+        "this year": 21379945
+      },
+      {
+        "month": "December 2023",
+        "last year": 101000,
+        "this year": 31355587
+      },
+      {
+        "month": "January 2024",
+        "last year": 79711506,
+        "this year": 56738564
+      }
+    ]
+  }
+}).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>
+    
+    <div class="visualization">
+        <div id="vis_1733737846629"></div>
+        <script>
+            vegaEmbed("#vis_1733737846629", {
+  "mark": "arc",
+  "encoding": {
+    "theta": {
+      "field": "this year",
+      "type": "quantitative"
+    },
+    "color": {
+      "field": "month",
+      "type": "nominal"
     }
   },
   "data": {

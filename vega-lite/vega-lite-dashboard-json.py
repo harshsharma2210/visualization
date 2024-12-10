@@ -5,8 +5,29 @@ import os
 import regex as re
 import time
 from utils import get_openai_api_key
-
+from templates import line_chart_template, bar_chart_template, pie_chart_template
 openai.api_key = get_openai_api_key()
+def select_template(chart_type):
+    templates = {
+        "line": line_chart_template,
+        "bar": bar_chart_template,
+        "pie": pie_chart_template
+    }
+    return templates.get(chart_type)
+
+def extract_visualization_parameters(assistant_reply):
+    try:
+        data = json.loads(assistant_reply)
+        chart_type = data.get("chart_type", "").lower()
+        spec = data.get("spec", {})
+        return chart_type, spec
+    except json.JSONDecodeError:
+        print("Invalid JSON from assistant.")
+        return None, {}
+    except KeyError as ke:
+        print(f"Missing key in assistant reply: {ke}")
+        return None, {}
+
 
 def read_csv(file_path):
     try:
@@ -128,12 +149,16 @@ def append_json_to_html(json_data, data, html_file='output-vega-lite-dashboard.h
     new_content = content[:insertion_point] + visualization_html + content[insertion_point:]
     with open(html_file, 'w') as f:
         f.write(new_content)
+
 def main():
     try:
         api_key = get_openai_api_key()
     except ValueError as ve:
         print(ve)
         return
+
+    openai.api_key = api_key
+
     csv_path = input("Enter the path to your CSV file: ").strip()
     try:
         df = read_csv(csv_path)
@@ -141,6 +166,7 @@ def main():
     except ValueError as ve:
         print(ve)
         return
+
     description, columns = infer_csv_structure(df)
     print("\n--- DataFrame Summary ---")
     print(pd.DataFrame(description).transpose())
@@ -171,22 +197,38 @@ def main():
             continue
         extracted_json = extract_json(assistant_reply)
         if extracted_json:
-            try:
-                vega_lite_json = json.loads(extracted_json)
-                print("\n--- Vega-Lite JSON ---")
-                print(json.dumps(vega_lite_json, indent=2))
-                
-                # Append the JSON to the HTML file with embedded data
-                append_json_to_html(vega_lite_json, data_as_json)
-
-                conversation.append(
-                    {"role": "assistant", "content": json.dumps(vega_lite_json)}
-                )
-                print(f"\nVisualization appended to 'output-vega-lite-dashboard.html'.")
-            except json.JSONDecodeError:
-                print("\nAssistant provided invalid JSON:")
-                print(extracted_json)
+            chart_type, spec = extract_visualization_parameters(extracted_json)
+            if not chart_type:
+                print("\nAssistant provided invalid or incomplete JSON.")
                 conversation.append({"role": "assistant", "content": extracted_json})
+                continue
+            template = select_template(chart_type)
+            if not template:
+                print(f"\nUnrecognized chart type: '{chart_type}'. Please use 'line', 'bar', or 'pie'.")
+                conversation.append({"role": "assistant", "content": extracted_json})
+                continue
+            try:
+                # Make a deep copy of the template to avoid modifying the original
+                merged_json = json.loads(json.dumps(template))
+                # Merge the LLM-generated spec into the template
+                merged_json = deep_merge_dicts(merged_json, spec)
+                # Validate the merged JSON
+                if not validate_vega_lite_json(merged_json):
+                    print("Generated Vega-Lite JSON is invalid.")
+                    continue
+                print("\n--- Merged Vega-Lite JSON ---")
+                print(json.dumps(merged_json, indent=2))
+                # Append the JSON to the HTML file with embedded data
+                append_json_to_html(merged_json, data_as_json)
+                conversation.append({"role": "assistant", "content": json.dumps(merged_json)})
+                print(f"\nVisualization appended to 'output-vega-lite-dashboard.html'.")
+            except json.JSONDecodeError as jde:
+                print("\nError processing the template JSON:")
+                print(jde)
+                conversation.append({"role": "assistant", "content": str(jde)})
+            except Exception as e:
+                print(f"\nAn error occurred during merging: {e}")
+                conversation.append({"role": "assistant", "content": str(e)})
         else:
             print("\nAssistant:")
             print(assistant_reply)

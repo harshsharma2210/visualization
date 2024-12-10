@@ -3,7 +3,7 @@ import os
 import tempfile
 import webbrowser
 from copy import deepcopy
-
+import json
 def get_openai_api_key():
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key and os.path.exists(".env"):
@@ -34,11 +34,44 @@ def display_chart(chart):
         print(f"Failed to display chart: {e}")
 
 
-def deep_merge(dict1, dict2):
+def deep_merge_dicts(dict1, dict2):
     merged = deepcopy(dict1)
     for key, value in dict2.items():
         if key in merged and isinstance(merged[key], dict) and isinstance(value, dict):
-            merged[key] = deep_merge(merged[key], value)
+            merged[key] = deep_merge_dicts(merged[key], value)
         else:
             merged[key] = deepcopy(value)
     return merged
+
+    
+def extract_visualization_parameters(assistant_reply):
+    """
+    Extracts the visualization parameters including chart_type and other encoding details.
+    Derives 'chart_type' from the 'mark' property in the Vega-Lite spec.
+
+    Args:
+        assistant_reply (str): JSON string from the assistant containing 'spec' key.
+
+    Returns:
+        tuple: (chart_type (str), spec (dict))
+    """
+    try:
+        data = json.loads(assistant_reply)
+        spec = data.get("spec", {})
+        
+        # Derive chart_type from 'mark'
+        mark = spec.get("mark", "")
+        if isinstance(mark, dict):
+            chart_type = mark.get("type", "").lower()
+        elif isinstance(mark, str):
+            chart_type = mark.lower()
+        else:
+            chart_type = ""
+        
+        return chart_type, spec
+    except json.JSONDecodeError:
+        print("Invalid JSON from assistant.")
+        return None, {}
+    except KeyError as ke:
+        print(f"Missing key in assistant reply: {ke}")
+        return None, {}

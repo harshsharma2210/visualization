@@ -7,7 +7,7 @@ import time
 from utils import get_openai_api_key
 
 openai.api_key = get_openai_api_key()
-
+model = "gpt-4o"
 def read_csv(file_path):
     try:
         df = pd.read_csv(file_path)
@@ -39,7 +39,8 @@ def get_base_prompt():
         "- The legend should be positioned below the chart with no title.\n"       
     )
     return base_prompt
-def send_message_to_openai(conversation, dataframe_info, column_info, data_sample, api_key):
+
+def send_message_to_openai(conversation, dataframe_info, column_info, data_sample):
     system_prompts = [
         {
             "role": "system",
@@ -73,20 +74,16 @@ def send_message_to_openai(conversation, dataframe_info, column_info, data_sampl
                 "Do **not** include the 'data' field in your Vega-Lite specification. "
                 "The data will be injected separately by the application."
             ),
-        },
-        {
-            "role": "system",
-            "content": (get_base_prompt()),
-        },
+        }
     ]
 
     messages = system_prompts + conversation
 
     try:
         response = openai.chat.completions.create(
-            model="gpt-4o",
+            model=model,
             messages=messages,
-            temperature=0.3,
+            temperature=0,
             max_tokens=2000,
         )
         assistant_reply = response.choices[0].message.content
@@ -145,6 +142,36 @@ def append_json_to_html(json_data, data, html_file='output-vega-lite-dashboard-p
     new_content = content[:insertion_point] + visualization_html + content[insertion_point:]
     with open(html_file, 'w') as f:
         f.write(new_content)
+
+def get_new_json_structure(base_prompt, api_key, model="gpt-4"):
+    """Send the base prompt to OpenAI to get a new JSON structure."""
+    system_prompt = {
+        "role": "system",
+        "content": (
+            "You are a visualization assistant that generates Vega-Lite specifications based on provided configurations. "
+            "Do not include any explanatory text in the output, only return the final Vega-Lite JSON specification."
+        ),
+    }
+
+    user_prompt = {
+        "role": "user",
+        "content": base_prompt,
+    }
+
+    messages = [system_prompt, user_prompt]
+
+    try:
+        response = openai.chat.completions.create(
+            model=model,
+            messages=messages,
+            temperature=0,
+            max_tokens=2000,
+        )
+        assistant_reply = response.choices[0].message.content
+        return assistant_reply
+    except Exception as e:
+        raise ConnectionError(f"Error communicating with OpenAI for base prompt: {e}")
+
 def main():
     try:
         api_key = get_openai_api_key()
@@ -181,7 +208,7 @@ def main():
             conversation.append({"role": "user", "content": user_input})
         try:
             assistant_reply = send_message_to_openai(
-                conversation, description, columns, data_sample, api_key
+                conversation, description, columns, data_sample
             )
         except ConnectionError as ce:
             print(ce)
@@ -208,6 +235,35 @@ def main():
             print("\nAssistant:")
             print(assistant_reply)
             conversation.append({"role": "assistant", "content": assistant_reply})
+
+        print("\n--- Generating refined JSON structure based on base prompt ---")
+        try:
+            base_prompt = get_base_prompt()
+            new_json_reply = get_new_json_structure(base_prompt, api_key)
+            extracted_new_json = extract_json(new_json_reply)
+            if extracted_new_json:
+                try:
+                    new_vega_lite_json = json.loads(extracted_new_json)
+                    print("\n--- Refined Vega-Lite JSON ---")
+                    print(json.dumps(new_vega_lite_json, indent=2))
+                    
+                    # Append the refined JSON to the HTML file with embedded data
+                    append_json_to_html(new_vega_lite_json, data_as_json)
+
+                    conversation.append(
+                        {"role": "assistant", "content": json.dumps(new_vega_lite_json)}
+                    )
+                    print(f"\nRefined visualization appended to 'output-vega-lite-dashboard-prompt.html'.")
+                except json.JSONDecodeError:
+                    print("\nAssistant provided invalid JSON for refined structure:")
+                    print(extracted_new_json)
+                    conversation.append({"role": "assistant", "content": extracted_new_json})
+            else:
+                print("\nAssistant did not provide a valid JSON for refined structure.")
+                conversation.append({"role": "assistant", "content": new_json_reply})
+        except ConnectionError as ce:
+            print(ce)
+
         print("\n")
 
     print("\nAll visualizations have been saved to 'output-vega-lite-dashboard-prompt.html'.")
