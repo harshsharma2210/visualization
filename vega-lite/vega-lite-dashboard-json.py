@@ -4,52 +4,28 @@ import json
 import os
 import regex as re
 import time
-from utils import get_openai_api_key
+from utils import (
+    get_openai_api_key,
+    deep_merge_dicts,
+    read_csv,
+    infer_csv_structure,
+    extract_json,
+)
 from templates import line_chart_template, bar_chart_template, pie_chart_template
+
 openai.api_key = get_openai_api_key()
+
+
 def select_template(chart_type):
     templates = {
         "line": line_chart_template,
         "bar": bar_chart_template,
-        "pie": pie_chart_template
+        "pie": pie_chart_template,
     }
     return templates.get(chart_type)
 
-def extract_visualization_parameters(assistant_reply):
-    try:
-        data = json.loads(assistant_reply)
-        chart_type = data.get("chart_type", "").lower()
-        spec = data.get("spec", {})
-        return chart_type, spec
-    except json.JSONDecodeError:
-        print("Invalid JSON from assistant.")
-        return None, {}
-    except KeyError as ke:
-        print(f"Missing key in assistant reply: {ke}")
-        return None, {}
 
-
-def read_csv(file_path):
-    try:
-        df = pd.read_csv(file_path)
-        return df
-    except Exception as e:
-        raise ValueError(f"Error reading CSV file: {e}")
-
-def infer_csv_structure(df):
-    description = df.describe(include="all").to_dict()
-    columns = df.columns.tolist()
-    return description, columns
-
-def extract_json(text):
-    json_pattern = re.compile(r"\{(?:[^{}]|(?0))*\}")
-    match = json_pattern.search(text)
-    if match:
-        return match.group()
-    return None
-
-
-def send_message_to_openai(conversation, dataframe_info, column_info, data_sample, api_key):
+def send_message_to_openai(conversation, dataframe_info, column_info, data_sample):
     system_prompts = [
         {
             "role": "system",
@@ -74,7 +50,7 @@ def send_message_to_openai(conversation, dataframe_info, column_info, data_sampl
         {"role": "system", "content": f"Columns: {', '.join(column_info)}"},
         {
             "role": "system",
-            "content": f"Here is a sample of the data:\n{json.dumps(data_sample, indent=2)}"
+            "content": f"Here is a sample of the data:\n{json.dumps(data_sample, indent=2)}",
         },
         {
             "role": "system",
@@ -98,11 +74,13 @@ def send_message_to_openai(conversation, dataframe_info, column_info, data_sampl
     except Exception as e:
         raise ConnectionError(f"Error communicating with OpenAI: {e}")
 
-def initialize_html(html_file='output-vega-lite-dashboard.html'):
+
+def initialize_html(html_file="output-vega-lite-dashboard.html"):
     """Create the HTML file with necessary headers if it doesn't exist."""
     if not os.path.exists(html_file):
-        with open(html_file, 'w') as f:
-            f.write("""<!DOCTYPE html>
+        with open(html_file, "w") as f:
+            f.write(
+                """<!DOCTYPE html>
             <html>
             <head>
                 <meta charset="UTF-8">
@@ -124,12 +102,14 @@ def initialize_html(html_file='output-vega-lite-dashboard.html'):
                 <h1>Vega-Lite Visualizations Dashboard</h1>
             </body>
             </html>
-        """)
+        """
+            )
 
-def append_json_to_html(json_data, data, html_file='output-vega-lite-dashboard.html'):
+
+def append_json_to_html(json_data, data, html_file="output-vega-lite-dashboard.html"):
     initialize_html(html_file)
     visualization_id = f"vis_{int(time.time() * 1000)}"
-    json_data['data'] = {'values': data}
+    json_data["data"] = {"values": data}
     visualization_html = f"""
     <div class="visualization">
         <div id="{visualization_id}"></div>
@@ -140,15 +120,18 @@ def append_json_to_html(json_data, data, html_file='output-vega-lite-dashboard.h
         </script>
     </div>
     """
-    with open(html_file, 'r') as f:
+    with open(html_file, "r") as f:
         content = f.read()
-    insertion_point = content.rfind('</body>')
+    insertion_point = content.rfind("</body>")
     if insertion_point == -1:
         insertion_point = len(content)
 
-    new_content = content[:insertion_point] + visualization_html + content[insertion_point:]
-    with open(html_file, 'w') as f:
+    new_content = (
+        content[:insertion_point] + visualization_html + content[insertion_point:]
+    )
+    with open(html_file, "w") as f:
         f.write(new_content)
+
 
 def main():
     try:
@@ -178,8 +161,8 @@ def main():
     initialize_html()
 
     # Convert the DataFrame to a list of records (JSON)
-    data_as_json = df.to_dict(orient='records')
-    data_sample = df.head(5).to_dict(orient='records')
+    data_as_json = df.to_dict(orient="records")
+    data_sample = df.head(5).to_dict(orient="records")
 
     while True:
         user_input = input("You: ").strip()
@@ -190,7 +173,7 @@ def main():
             conversation.append({"role": "user", "content": user_input})
         try:
             assistant_reply = send_message_to_openai(
-                conversation, description, columns, data_sample, api_key
+                conversation, description, columns, data_sample
             )
         except ConnectionError as ce:
             print(ce)
@@ -204,7 +187,9 @@ def main():
                 continue
             template = select_template(chart_type)
             if not template:
-                print(f"\nUnrecognized chart type: '{chart_type}'. Please use 'line', 'bar', or 'pie'.")
+                print(
+                    f"\nUnrecognized chart type: '{chart_type}'. Please use 'line', 'bar', or 'pie'."
+                )
                 conversation.append({"role": "assistant", "content": extracted_json})
                 continue
             try:
@@ -212,15 +197,12 @@ def main():
                 merged_json = json.loads(json.dumps(template))
                 # Merge the LLM-generated spec into the template
                 merged_json = deep_merge_dicts(merged_json, spec)
-                # Validate the merged JSON
-                if not validate_vega_lite_json(merged_json):
-                    print("Generated Vega-Lite JSON is invalid.")
-                    continue
-                print("\n--- Merged Vega-Lite JSON ---")
                 print(json.dumps(merged_json, indent=2))
                 # Append the JSON to the HTML file with embedded data
                 append_json_to_html(merged_json, data_as_json)
-                conversation.append({"role": "assistant", "content": json.dumps(merged_json)})
+                conversation.append(
+                    {"role": "assistant", "content": json.dumps(merged_json)}
+                )
                 print(f"\nVisualization appended to 'output-vega-lite-dashboard.html'.")
             except json.JSONDecodeError as jde:
                 print("\nError processing the template JSON:")
@@ -236,6 +218,7 @@ def main():
         print("\n")
 
     print("\nAll visualizations have been saved to 'output-vega-lite-dashboard.html'.")
+
 
 if __name__ == "__main__":
     main()
