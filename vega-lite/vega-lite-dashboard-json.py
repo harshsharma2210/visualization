@@ -4,7 +4,7 @@ import json
 import os
 import regex as re
 import time
-from utils import get_openai_api_key
+from utils import get_openai_api_key, deep_merge_dicts
 from templates import line_chart_template, bar_chart_template, pie_chart_template
 openai.api_key = get_openai_api_key()
 def select_template(chart_type):
@@ -212,11 +212,6 @@ def main():
                 merged_json = json.loads(json.dumps(template))
                 # Merge the LLM-generated spec into the template
                 merged_json = deep_merge_dicts(merged_json, spec)
-                # Validate the merged JSON
-                if not validate_vega_lite_json(merged_json):
-                    print("Generated Vega-Lite JSON is invalid.")
-                    continue
-                print("\n--- Merged Vega-Lite JSON ---")
                 print(json.dumps(merged_json, indent=2))
                 # Append the JSON to the HTML file with embedded data
                 append_json_to_html(merged_json, data_as_json)
