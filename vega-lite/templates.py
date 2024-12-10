@@ -1,42 +1,42 @@
 
 
-line_chart_template = {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "data": {},
-  "mark": {
-    "type": "line",
-    "point": true
-  },
-  "config": {
-    "customFormatTypes": true,
-    "locale": {
-      "decimal": ".",
-      "thousands": ",",
-      "grouping": [3, 2],
-      "currency": ["₹", ""]
+line_chart_template =  {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {},
+    "mark": {
+        "type": "line",
+        "point": True
     },
-    "axis": {
-      "title": null,
-      "grid": true,
-      "labelFont": "Arial",
-      "labelFontSize": 12,
-      "gridColor": "#ccc",
-      "gridOpacity": 0.5
-    },
-    "axisX": {
-      "labelAngle": -45
-    },
-    "axisY": {},
-    "legend": {
-      "orient": "bottom",
-      "title": null,
-      "labelFont": "Arial",
-      "labelFontSize": 12
-    },
-    "view": {
-      "stroke": "transparent"
+    "config": {
+        "customFormatTypes": True,
+        "locale": {
+            "decimal": ".",
+            "thousands": ",",
+            "grouping": [3, 2],
+            "currency": ["₹", ""]
+        },
+        "axis": {
+            "title": None,
+            "grid": True,
+            "labelFont": "Arial",
+            "labelFontSize": 12,
+            "gridColor": "#ccc",
+            "gridOpacity": 0.5
+        },
+        "axisX": {
+            "labelAngle": -45
+        },
+        "axisY": {},
+        "legend": {
+            "orient": "bottom",
+            "title": None,
+            "labelFont": "Arial",
+            "labelFontSize": 12
+        },
+        "view": {
+            "stroke": "transparent"
+        }
     }
-  }
 }
 
 

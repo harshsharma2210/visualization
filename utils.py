@@ -43,35 +43,32 @@ def deep_merge_dicts(dict1, dict2):
             merged[key] = deepcopy(value)
     return merged
 
-    
-def extract_visualization_parameters(assistant_reply):
-    """
-    Extracts the visualization parameters including chart_type and other encoding details.
-    Derives 'chart_type' from the 'mark' property in the Vega-Lite spec.
 
-    Args:
-        assistant_reply (str): JSON string from the assistant containing 'spec' key.
-
-    Returns:
-        tuple: (chart_type (str), spec (dict))
-    """
+def read_csv(file_path):
     try:
-        data = json.loads(assistant_reply)
-        spec = data.get("spec", {})
-        
-        # Derive chart_type from 'mark'
-        mark = spec.get("mark", "")
-        if isinstance(mark, dict):
-            chart_type = mark.get("type", "").lower()
-        elif isinstance(mark, str):
-            chart_type = mark.lower()
-        else:
-            chart_type = ""
-        
-        return chart_type, spec
-    except json.JSONDecodeError:
-        print("Invalid JSON from assistant.")
-        return None, {}
-    except KeyError as ke:
-        print(f"Missing key in assistant reply: {ke}")
-        return None, {}
+        df = pd.read_csv(file_path)
+        return df
+    except Exception as e:
+        raise ValueError(f"Error reading CSV file: {e}")
+
+def infer_csv_structure(df):
+    description = df.describe(include="all").to_dict()
+    columns = df.columns.tolist()
+    return description, columns
+
+def extract_json(text):
+    json_pattern = re.compile(r"\{(?:[^{}]|(?0))*\}")
+    match = json_pattern.search(text)
+    if match:
+        return match.group()
+    return None
+
+def extract_chart_type(vega_lite_schema):
+    mark = vega_lite_schema.get("mark")
+    if mark is None:
+        return None
+    if isinstance(mark, dict):
+        return mark.get("type")
+    if isinstance(mark, str):
+        return mark
+    return None
