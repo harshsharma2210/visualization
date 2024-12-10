@@ -4,6 +4,7 @@ import json
 import os
 import regex as re
 import time
+import copy
 from utils import (
     get_openai_api_key,
     deep_merge_dicts,
@@ -13,7 +14,6 @@ from utils import (
     extract_chart_type
 )
 from templates import line_chart_template, bar_chart_template, pie_chart_template
-
 openai.api_key = get_openai_api_key()
 
 
@@ -190,14 +190,12 @@ def main():
             template = select_template(chart_type)
             if not template:
                 print(
-                    f"\nUnrecognized chart type: '{chart_type}'. Please use 'line', 'bar', or 'pie'."
+                    f"\nUnrecognized chart type: '{chart_type}'. Please use 'line', 'bar', or 'arc'."
                 )
                 conversation.append({"role": "assistant", "content": extracted_json})
                 continue
             try:
-                # Make a deep copy of the template to avoid modifying the original
-                merged_json = json.loads(json.dumps(template))
-                # Merge the LLM-generated spec into the template
+                merged_json = copy.deepcopy(template)
                 merged_json = deep_merge_dicts(merged_json, spec)
                 print(json.dumps(merged_json, indent=2))
                 # Append the JSON to the HTML file with embedded data
