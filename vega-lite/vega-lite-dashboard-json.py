@@ -4,25 +4,27 @@ import json
 import os
 import regex as re
 import time
+import copy
 from utils import (
     get_openai_api_key,
     deep_merge_dicts,
     read_csv,
     infer_csv_structure,
     extract_json,
+    extract_chart_type
 )
 from templates import line_chart_template, bar_chart_template, pie_chart_template
-
 openai.api_key = get_openai_api_key()
 
 
 def select_template(chart_type):
     templates = {
-        "line": line_chart_template,
-        "bar": bar_chart_template,
-        "pie": pie_chart_template,
+        "line": line_chart_template, 
+        "bar": bar_chart_template,    
+        "arc": pie_chart_template    
     }
     return templates.get(chart_type)
+
 
 
 def send_message_to_openai(conversation, dataframe_info, column_info, data_sample):
@@ -155,12 +157,8 @@ def main():
     print(pd.DataFrame(description).transpose())
     conversation = []
 
-    print(
-        "\nStart chatting with the assistant. Type 'exit' or 'quit' to end the session.\n"
-    )
+    print("\nStart chatting with the assistant. Type 'exit' or 'quit' to end the session.\n")
     initialize_html()
-
-    # Convert the DataFrame to a list of records (JSON)
     data_as_json = df.to_dict(orient="records")
     data_sample = df.head(5).to_dict(orient="records")
 
@@ -179,30 +177,25 @@ def main():
             print(ce)
             continue
         extracted_json = extract_json(assistant_reply)
+        if extracted_json and isinstance(extracted_json, str):
+            extracted_json = json.loads(extracted_json)
         if extracted_json:
-            chart_type, spec = extract_visualization_parameters(extracted_json)
+            chart_type = extract_chart_type(extracted_json)
             if not chart_type:
                 print("\nAssistant provided invalid or incomplete JSON.")
-                conversation.append({"role": "assistant", "content": extracted_json})
-                continue
+                conversation.append({"role": "assistant", "content": json.dumps(extracted_json)})
+                continue            
             template = select_template(chart_type)
             if not template:
-                print(
-                    f"\nUnrecognized chart type: '{chart_type}'. Please use 'line', 'bar', or 'pie'."
-                )
-                conversation.append({"role": "assistant", "content": extracted_json})
+                print(f"\nUnrecognized chart type: '{chart_type}'. Please use 'line', 'bar', or 'arc'.")
+                conversation.append({"role": "assistant", "content": json.dumps(extracted_json)})
                 continue
             try:
-                # Make a deep copy of the template to avoid modifying the original
-                merged_json = json.loads(json.dumps(template))
-                # Merge the LLM-generated spec into the template
-                merged_json = deep_merge_dicts(merged_json, spec)
-                print(json.dumps(merged_json, indent=2))
-                # Append the JSON to the HTML file with embedded data
-                append_json_to_html(merged_json, data_as_json)
-                conversation.append(
-                    {"role": "assistant", "content": json.dumps(merged_json)}
-                )
+                template_copy = copy.deepcopy(template)
+                template_copy = deep_merge_dicts(extracted_json, template_copy)
+                print(json.dumps(template_copy, indent=2))
+                append_json_to_html(template_copy, data_as_json)
+                conversation.append({"role": "assistant", "content": json.dumps(template_copy)})
                 print(f"\nVisualization appended to 'output-vega-lite-dashboard.html'.")
             except json.JSONDecodeError as jde:
                 print("\nError processing the template JSON:")
