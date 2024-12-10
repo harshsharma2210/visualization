@@ -157,12 +157,8 @@ def main():
     print(pd.DataFrame(description).transpose())
     conversation = []
 
-    print(
-        "\nStart chatting with the assistant. Type 'exit' or 'quit' to end the session.\n"
-    )
+    print("\nStart chatting with the assistant. Type 'exit' or 'quit' to end the session.\n")
     initialize_html()
-
-    # Convert the DataFrame to a list of records (JSON)
     data_as_json = df.to_dict(orient="records")
     data_sample = df.head(5).to_dict(orient="records")
 
@@ -185,24 +181,19 @@ def main():
             chart_type = extract_chart_type(extracted_json)
             if not chart_type:
                 print("\nAssistant provided invalid or incomplete JSON.")
-                conversation.append({"role": "assistant", "content": extracted_json})
-                continue
+                conversation.append({"role": "assistant", "content": json.dumps(extracted_json)})
+                continue            
             template = select_template(chart_type)
             if not template:
-                print(
-                    f"\nUnrecognized chart type: '{chart_type}'. Please use 'line', 'bar', or 'arc'."
-                )
-                conversation.append({"role": "assistant", "content": extracted_json})
+                print(f"\nUnrecognized chart type: '{chart_type}'. Please use 'line', 'bar', or 'arc'.")
+                conversation.append({"role": "assistant", "content": json.dumps(extracted_json)})
                 continue
             try:
-                merged_json = copy.deepcopy(template)
-                merged_json = deep_merge_dicts(merged_json, spec)
-                print(json.dumps(merged_json, indent=2))
-                # Append the JSON to the HTML file with embedded data
-                append_json_to_html(merged_json, data_as_json)
-                conversation.append(
-                    {"role": "assistant", "content": json.dumps(merged_json)}
-                )
+                template_copy = copy.deepcopy(template)
+                template_copy = deep_merge_dicts(extracted_json, template_copy)
+                print(json.dumps(template_copy, indent=2))
+                append_json_to_html(template_copy, data_as_json)
+                conversation.append({"role": "assistant", "content": json.dumps(template_copy)})
                 print(f"\nVisualization appended to 'output-vega-lite-dashboard.html'.")
             except json.JSONDecodeError as jde:
                 print("\nError processing the template JSON:")
