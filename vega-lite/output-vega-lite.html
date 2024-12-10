@@ -409,6 +409,81 @@
             }).catch(console.error);
         </script>
     </div>
+    
+    <div class="visualization">
+        <div id="vis_1733802260147"></div>
+        <script>
+            vegaEmbed("#vis_1733802260147", {
+  "mark": "arc",
+  "encoding": {
+    "theta": {
+      "field": "this year",
+      "type": "quantitative"
+    },
+    "color": {
+      "field": "month",
+      "type": "nominal"
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "month": "April 2023",
+        "last year": 0,
+        "this year": 20955600
+      },
+      {
+        "month": "May 2023",
+        "last year": 0,
+        "this year": 18350000
+      },
+      {
+        "month": "June 2023",
+        "last year": 68310,
+        "this year": 12943580
+      },
+      {
+        "month": "July 2023",
+        "last year": 21601,
+        "this year": 144888868
+      },
+      {
+        "month": "August 2023",
+        "last year": 134120180,
+        "this year": 102848517
+      },
+      {
+        "month": "September 2023",
+        "last year": 41649000,
+        "this year": 23610592
+      },
+      {
+        "month": "October 2023",
+        "last year": 7917182,
+        "this year": 61784552
+      },
+      {
+        "month": "November 2023",
+        "last year": 99342565,
+        "this year": 21379945
+      },
+      {
+        "month": "December 2023",
+        "last year": 101000,
+        "this year": 31355587
+      },
+      {
+        "month": "January 2024",
+        "last year": 79711506,
+        "this year": 56738564
+      }
+    ]
+  }
+}).then(function(result) {
+
+            }).catch(console.error);
+        </script>
+    </div>
     </body>
             </html>
         
