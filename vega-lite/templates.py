@@ -1,11 +1,10 @@
-
-
-line_chart_template =  {
+line_chart_template = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "data": {},
-    "mark": {
-        "type": "line",
-        "point": True
+    "mark": {"type": "line", "point": True},
+    "encoding": {
+        "x": {"title": None},
+        "y": {"title": None},
+        "color": {"title": None},
     },
     "config": {
         "customFormatTypes": True,
@@ -13,7 +12,7 @@ line_chart_template =  {
             "decimal": ".",
             "thousands": ",",
             "grouping": [3, 2],
-            "currency": ["₹", ""]
+            "currency": ["₹", ""],
         },
         "axis": {
             "title": None,
@@ -21,22 +20,18 @@ line_chart_template =  {
             "labelFont": "Arial",
             "labelFontSize": 12,
             "gridColor": "#ccc",
-            "gridOpacity": 0.5
+            "gridOpacity": 0.5,
         },
-        "axisX": {
-            "labelAngle": -45
-        },
+        "axisX": {"labelAngle": -45},
         "axisY": {},
         "legend": {
             "orient": "bottom",
             "title": None,
             "labelFont": "Arial",
-            "labelFontSize": 12
+            "labelFontSize": 12,
         },
-        "view": {
-            "stroke": "transparent"
-        }
-    }
+        "view": {"stroke": "transparent"},
+    },
 }
 
 

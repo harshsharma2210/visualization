@@ -32,17 +32,18 @@ def send_message_to_openai(conversation, dataframe_info, column_info, data_sampl
         {
             "role": "system",
             "content": (
-                "You are an assistant that generates Vega-Lite JSON specifications based on user requests and provided data."
-                " Do **not** include the 'data' field with 'values' in your specifications."
-                " Assume that the data will be provided externally by the application."
-                " Focus solely on defining the visualization marks, encodings, and other specifications."
+                "You are an assistant that generates Vega-Lite JSON specifications based on user requests and provided data. "
+                "Do **not** include the 'data' field with 'values' in your specifications. "
+                "Assume that the data will be provided externally by the application. "
+                "Focus solely on defining the visualization marks, encodings, and other specifications. "
+                "Ensure that tooltips are included to display relevant fields when hovering over data points."
             ),
         },
         {
             "role": "system",
             "content": (
-                "Please respond **only** with the Vega-Lite JSON specification. Do **not** include any explanations, comments, or additional text."
-                " Ensure that the JSON is valid and properly formatted."
+                "Please respond **only** with the Vega-Lite JSON specification. Do **not** include any explanations, comments, or additional text. "
+                "Ensure that the JSON is valid and properly formatted."
             ),
         },
         {
@@ -57,11 +58,12 @@ def send_message_to_openai(conversation, dataframe_info, column_info, data_sampl
         {
             "role": "system",
             "content": (
-                "Do **not** include the 'data' field in your Vega-Lite specification."
-                " The data will be injected separately by the application."
+                "Do **not** include the 'data' field in your Vega-Lite specification. "
+                "The data will be injected separately by the application."
             ),
         },
     ]
+
     messages = system_prompts + conversation
 
     try:
