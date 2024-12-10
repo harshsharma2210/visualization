@@ -45,7 +45,7 @@ def extract_customization_details(user_prompt):
         response = client.chat.completions.create(
             model="gpt-4o",
             messages=conversation_history,
-            temperature=0.3,
+            temperature=0,
             max_tokens=1000,
         )
 
@@ -131,7 +131,7 @@ def analyze_data_and_create_chart(df, user_prompt):
         response = client.chat.completions.create(
             model="gpt-4o",
             messages=conversation_history,
-            temperature=0.2,
+            temperature=0,
             max_tokens=1000,
         )
 

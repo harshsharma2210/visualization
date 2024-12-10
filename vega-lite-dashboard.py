@@ -69,7 +69,7 @@ def send_message_to_openai(conversation, dataframe_info, column_info, data_sampl
         response = openai.chat.completions.create(
             model="gpt-4o",
             messages=messages,
-            temperature=0.3,
+            temperature=0,
             max_tokens=2000,
         )
         assistant_reply = response.choices[0].message.content
