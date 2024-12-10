@@ -177,6 +177,8 @@ def main():
             print(ce)
             continue
         extracted_json = extract_json(assistant_reply)
+        if extracted_json and isinstance(extracted_json, str):
+            extracted_json = json.loads(extracted_json)
         if extracted_json:
             chart_type = extract_chart_type(extracted_json)
             if not chart_type:
