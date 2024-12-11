@@ -1,42 +1,44 @@
-
-
-line_chart_template =  {
+line_chart_template = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "data": {},
-    "mark": {
-        "type": "line",
-        "point": True
+    "mark": {"type": "line", "point": True},
+    "width": 500,
+    "height": 500,
+    "encoding": {
+        "x": {"title": None},
+        "y": {"title": None},
+        "color": {"title": None},
     },
     "config": {
         "customFormatTypes": True,
         "locale": {
             "decimal": ".",
             "thousands": ",",
-            "grouping": [3, 2],
-            "currency": ["₹", ""]
+            "grouping": [3, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+            "currency": ["₹", ""],
         },
         "axis": {
+            "labelPadding": 10,
+            "domain": False,
             "title": None,
             "grid": True,
-            "labelFont": "Arial",
-            "labelFontSize": 12,
-            "gridColor": "#ccc",
-            "gridOpacity": 0.5
+            "gridDash": [3, 3],
+            "ticks": False,
+            "labelFont": "Inter",
+            "titleFont": "Inter",
         },
-        "axisX": {
-            "labelAngle": -45
+        "axisX": {"labelAngle": -45},
+        "axisY": {
+            "tickCount": 6,
         },
-        "axisY": {},
         "legend": {
             "orient": "bottom",
             "title": None,
-            "labelFont": "Arial",
-            "labelFontSize": 12
+            "columnPadding": 10,
+            "labelFont": "Inter",
+            "titleFont": "Inter",
         },
-        "view": {
-            "stroke": "transparent"
-        }
-    }
+        "view": {"stroke": "transparent"},
+    },
 }
 
 

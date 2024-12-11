@@ -61,7 +61,7 @@ def generate_chart_code(prompt):
             {"role": "system", "content": "You are an expert in creating data visualizations and Altair charts."},
             {"role": "user", "content": full_prompt}
         ],
-        temperature=0.3,
+        temperature=0,
         max_tokens=2000
     )
     
